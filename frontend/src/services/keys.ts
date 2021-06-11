@@ -1,0 +1,1 @@
+export const accessUserCred: string = 'accessUserCredKey'

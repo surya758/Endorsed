@@ -1,0 +1,15 @@
+projects:
+  endorsed:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/services/api/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/services/api/API.ts
+        docsFilePath: src/services/api/graphql
+extensions:
+  amplify:
+    version: 3
