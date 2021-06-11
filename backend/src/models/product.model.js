@@ -10,6 +10,10 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  manufacturer: {
+    type: String,
+    required: true,
+  },
   upvotes: {
     type: Number,
     required: true,
@@ -23,8 +27,8 @@ const productSchema = mongoose.Schema({
     required: true,
   },
   releaseDate: {
-    type: Date,
-    // required: true,
+    type: String,
+    required: true,
   },
   rating: {
     type: mongoose.Types.Decimal128,
@@ -34,13 +38,22 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  ram: {
+    type: Number,
+    required: true,
+  },
+  storage: {
+    type: Number,
+    required: true,
+  },
+  resolution: {
+    type: String,
+    required: true,
+  },
+
   comment: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'comment.model',
-  },
-  specification: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'specification.model',
+    ref: 'Comment',
   },
 });
 

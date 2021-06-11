@@ -3,7 +3,12 @@ import { Lato_400Regular, useFonts } from "@expo-google-fonts/lato";
 import React, { useEffect, useState } from "react";
 
 type PropType = {
-	item: { imageURL: string; title: String; description: String };
+	item: {
+		imageURL: string;
+		title: String;
+		description: String;
+		manufacturer: String;
+	};
 };
 
 const ProductCard = (props: PropType) => {
@@ -37,7 +42,7 @@ const ProductCard = (props: PropType) => {
 							{props.item.title}
 						</Text>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 14 }}>
-							{props.item.description}
+							{props.item.manufacturer}
 						</Text>
 					</View>
 				</View>

@@ -14,8 +14,7 @@ const getProduct = catchAsync(async (req, res) => {
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, 'product not found');
   }
-  const { title, description, imageURL } = product;
-  res.send({ title, description, imageURL });
+  res.send(product);
 });
 
 const getProducts = catchAsync(async (req, res) => {
@@ -23,7 +22,13 @@ const getProducts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await productService.queryProducts(filter, options);
   // console.log(result);
-  res.send(result);
+
+  const newProducts = [];
+  for (let key in result.results) {
+    const { title, manufacturer, description, imageURL, id, upvotes, rating } = result.results[key];
+    newProducts[key] = { title, manufacturer, description, imageURL, id, rating, upvotes };
+  }
+  res.send(newProducts);
 });
 
 const deleteProduct = catchAsync(async (req, res) => {

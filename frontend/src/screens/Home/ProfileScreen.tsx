@@ -8,6 +8,7 @@ const ProfileScreen = () => {
 	return (
 		<View>
 			<View style={{ height: Insets.top, backgroundColor: "red" }} />
+			<View></View>
 			<View style={styles.line} />
 		</View>
 	);

@@ -13,59 +13,57 @@ import {
 } from "@expo-google-fonts/source-sans-pro";
 
 import Endorsed from "../../assets/icons/Endorsed";
-import HomeIcon from "../../assets/icons/tabIcons/HomeIcon";
 import { Ionicons } from "@expo/vector-icons";
 import ProductCard from "../../components/ProductCard";
 import ProductContext from "../../context/ProductContext";
-import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const testFlatData0 = [
-	{
-		imageURL:
-			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-		title: "title1",
-		description: "des1",
-	},
-	{
-		imageURL:
-			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-		title: "title2",
-		description: "des2",
-	},
-	{
-		imageURL:
-			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-		title: "title3",
-		description: "des3",
-	},
-];
+// import axios from "axios";
 
-type productType = {
-	imageURL: string;
-	title: string;
-	description: string;
-};
+// const testFlatData0 = [
+// 	{
+// 		imageURL:
+// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+// 		title: "title1",
+// 		description: "des1",
+// 	},
+// 	{
+// 		imageURL:
+// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+// 		title: "title2",
+// 		description: "des2",
+// 	},
+// 	{
+// 		imageURL:
+// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
+// 		title: "title3",
+// 		description: "des3",
+// 	},
+// ];
+
+// type productType = {
+// 	imageURL: string;
+// 	title: string;
+// 	description: string;
+// };
 
 const HomeScreen = ({ navigation }) => {
 	const product = useContext(ProductContext);
+	// const [testFlatData, setTestFlatData] =
+	// 	useState<Array<productType>>(testFlatData0);
+	// const getProductFunc = async () => {
+	// 	try {
+	// 		await axios.get("http://10.0.2.2:3000/v1/products").then((res) => {
+	// 			setTestFlatData(res.data);
+	// 		});
+	// 	} catch (err) {
+	// 		// console.log(err);
+	// 	}
+	// };
 
-	const [testFlatData, setTestFlatData] =
-		useState<Array<productType>>(testFlatData0);
-	const getProductFunc = async () => {
-		try {
-			await axios.get("http://10.0.2.2:3000/v1/products").then((res) => {
-				console.log(res.data);
-				setTestFlatData(res.data.results);
-			});
-		} catch (err) {
-			// console.log(err);
-		}
-	};
-
-	useEffect(() => {
-		getProductFunc();
-	}, []);
+	// useEffect(() => {
+	// 	getProductFunc();
+	// }, []);
 
 	const insets = useSafeAreaInsets();
 	let [fontsLoaded] = useFonts({
@@ -128,7 +126,7 @@ const HomeScreen = ({ navigation }) => {
 					</Text>
 				</View>
 				<FlatList
-					data={testFlatData}
+					data={product}
 					keyExtractor={(product) => product.title}
 					renderItem={({ item }) => {
 						return <ProductCard item={item} navigation={navigation} />;
