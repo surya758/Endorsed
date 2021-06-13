@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
-const { toJSON, paginate } = require('./plugins');
+const { toJSON } = require('./plugins');
 
 const commentSchema = mongoose.Schema(
   {
-    description: {
+    body: {
       required: true,
       type: String,
     },
-    User: {
-      type: mongoose.Schema.Types.ObjectId,
+    user: {
+      type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
-    Product: {
-      type: mongoose.Schema.Types.ObjectId,
+    product: {
+      type: mongoose.Schema.ObjectId,
       ref: 'Product',
     },
   },
@@ -21,6 +21,17 @@ const commentSchema = mongoose.Schema(
   }
 );
 commentSchema.plugin(toJSON);
+
+commentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'name',
+  }).populate({
+    path: 'product',
+    select: 'title',
+  });
+  next();
+});
 
 const Comment = mongoose.model('Comment', commentSchema);
 

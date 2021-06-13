@@ -3,6 +3,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { productService } = require('../services');
+const { Product } = require('../models');
 
 const createProduct = catchAsync(async (req, res) => {
   const product = await productService.createProduct(req.body);
@@ -23,12 +24,13 @@ const getProducts = catchAsync(async (req, res) => {
   const result = await productService.queryProducts(filter, options);
   // console.log(result);
 
-  const newProducts = [];
-  for (let key in result.results) {
-    const { title, manufacturer, description, imageURL, id, upvotes, rating } = result.results[key];
-    newProducts[key] = { title, manufacturer, description, imageURL, id, rating, upvotes };
-  }
-  res.send(newProducts);
+  // const newProducts = [];
+  // for (let key in result.results) {
+  //   const { title, manufacturer, description, imageURL, id, upvotes, rating } = result.results[key];
+  //   newProducts[key] = { title, manufacturer, description, imageURL, id, rating, upvotes };
+  // }
+  // res.send(newProducts);
+  res.send(result);
 });
 
 const deleteProduct = catchAsync(async (req, res) => {

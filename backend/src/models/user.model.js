@@ -46,6 +46,8 @@ const userSchema = mongoose.Schema(
     },
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtual: true },
     timestamps: true,
   }
 );
@@ -53,6 +55,12 @@ const userSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
+
+userSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'user',
+  localField: '_id',
+});
 
 /**
  * Check if email is taken

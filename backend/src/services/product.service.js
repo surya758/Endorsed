@@ -22,7 +22,7 @@ const queryProducts = async (filter, options, projections) => {
 };
 
 const getProductById = async (id) => {
-  return Product.findById(id);
+  return Product.findById(id).populate('comments');
 };
 
 /**
