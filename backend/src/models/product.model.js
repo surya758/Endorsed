@@ -18,15 +18,15 @@ const productSchema = mongoose.Schema(
     },
     upvotes: {
       type: Number,
-      required: true,
+      default: 0,
     },
     price: {
       type: Number,
-      required: true,
+      required: [true, 'A product must have a price'],
     },
     description: {
       type: String,
-      required: true,
+      default: 'Description...',
     },
     releaseDate: {
       type: String,
@@ -35,6 +35,8 @@ const productSchema = mongoose.Schema(
     rating: {
       type: mongoose.Types.Decimal128,
       required: true,
+      min: 1,
+      max: 10,
     },
     imageURL: {
       type: String,
@@ -42,15 +44,12 @@ const productSchema = mongoose.Schema(
     },
     ram: {
       type: Number,
-      required: true,
     },
     storage: {
       type: Number,
-      required: true,
     },
     resolution: {
       type: String,
-      required: true,
     },
   },
   {

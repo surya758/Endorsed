@@ -147,6 +147,7 @@ const RegisterScreen = (props) => {
 						autoCorrect={false}
 						textContentType='password'
 						placeholderTextColor='#707070'
+						secureTextEntry={true}
 					/>
 					<View style={{ flexDirection: "row", marginTop: 10 }}>
 						<Ionicons name='checkmark' size={16} color='black' />

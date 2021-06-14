@@ -1,6 +1,14 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Lato_400Regular, useFonts } from "@expo-google-fonts/lato";
+import {
+	Lato_300Light,
+	Lato_400Regular,
+	useFonts,
+} from "@expo-google-fonts/lato";
 import React, { useEffect, useState } from "react";
+
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 type PropType = {
 	item: {
@@ -14,36 +22,75 @@ type PropType = {
 const ProductCard = (props: PropType) => {
 	let [fontsLoaded] = useFonts({
 		Lato_400Regular,
+		Lato_300Light,
 	});
 	if (!fontsLoaded) {
 		return <View />;
 	}
 	return (
-		<View style={{ flex: 1, marginHorizontal: 20 }}>
-			<View style={styles.line} />
+		<View
+			style={{
+				flex: 1,
+				elevation: 10,
+				shadowRadius: 5,
+				shadowOpacity: 0.1,
+				shadowColor: "#000",
+				shadowOffset: { height: 0, width: 0 },
+				flexDirection: "row",
+				alignItems: "center",
+				backgroundColor: "#fff",
+				borderRadius: 5,
+			}}
+		>
 			<TouchableOpacity
 				onPress={() => {
 					props.navigation.navigate("ProductDetail", { item: props.item });
 				}}
+				activeOpacity={0.8}
 			>
-				<View style={{ flexDirection: "row", marginTop: 5 }}>
+				<View style={{ flexDirection: "row", marginVertical: 8 }}>
 					<Image
 						source={{
 							uri: props.item.imageURL,
 						}}
-						style={{
-							width: 100,
-							height: 150,
-							borderRadius: 10,
-						}}
+						style={styles.image}
 					/>
-					<View style={{ justifyContent: "space-evenly", marginLeft: 20 }}>
+					<View style={{ justifyContent: "space-evenly", marginLeft: 15 }}>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>
 							{props.item.title}
 						</Text>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 14 }}>
-							{props.item.manufacturer}
+							{/* {props.item.manufacturer} */} Google
 						</Text>
+						<View style={styles.category}>
+							<Text style={{ fontFamily: "Lato_400Regular", fontSize: 10 }}>
+								{/* {props.item.category} */} Mobiles
+							</Text>
+
+							<Entypo name='dot-single' size={12} color='#303030' />
+
+							<Text style={{ fontFamily: "Lato_400Regular", fontSize: 10 }}>
+								{/* {props.item.subcategory} */} Smart Phones
+							</Text>
+							<TouchableOpacity
+								style={{
+									flexDirection: "row",
+									paddingLeft: 20,
+								}}
+							>
+								<AntDesign name='pluscircle' size={15} color='#191970' />
+								<Text style={styles.saveText}>SAVE</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={styles.ratingAndViewsBox}>
+							<Ionicons name='star' size={14} color='grey' />
+
+							<Text style={styles.rating}>{/* {props.item.rating} */} 2.9</Text>
+							<AntDesign name='eye' size={14} color='grey' />
+							<Text style={styles.views}>
+								{/* {props.item.upvotes} */} 1500
+							</Text>
+						</View>
 					</View>
 				</View>
 			</TouchableOpacity>
@@ -54,10 +101,37 @@ const ProductCard = (props: PropType) => {
 export default ProductCard;
 
 const styles = StyleSheet.create({
-	line: {
-		borderBottomColor: "#707070",
-		borderBottomWidth: 1,
-		opacity: 0.3,
-		marginTop: 15,
+	image: {
+		width: 80,
+		height: 100,
+		borderRadius: 10,
+		marginLeft: 5,
+	},
+	category: {
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	saveText: {
+		fontSize: 12,
+		fontFamily: "Lato_400Regular",
+		marginLeft: 5,
+		color: "#191970",
+	},
+	ratingAndViewsBox: {
+		flexDirection: "row",
+		justifyContent: "flex-start",
+		alignItems: "center",
+	},
+	rating: {
+		fontFamily: "Lato_400Regular",
+		fontSize: 14,
+		marginLeft: 5,
+		marginRight: 20,
+	},
+	views: {
+		fontFamily: "Lato_400Regular",
+		fontSize: 14,
+		marginLeft: 5,
 	},
 });

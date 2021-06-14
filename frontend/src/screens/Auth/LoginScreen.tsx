@@ -13,7 +13,6 @@ import {
 	useFonts,
 } from "@expo-google-fonts/source-sans-pro";
 
-import Auth from "@aws-amplify/auth";
 import { Ionicons } from "@expo/vector-icons";
 import { RobotoMono_500Medium } from "@expo-google-fonts/roboto-mono";
 import axios from "axios";
@@ -75,11 +74,7 @@ const LoginScreen = (props) => {
 			<View style={{ height: insets.top }} />
 			<View style={{ flex: 4 }}>
 				<TouchableOpacity
-					style={{
-						marginLeft: 40,
-						marginTop: 50,
-						alignSelf: "flex-start",
-					}}
+					style={styles.backArrow}
 					onPress={() => {
 						props.navigation.navigate("Welcome");
 					}}
@@ -88,27 +83,12 @@ const LoginScreen = (props) => {
 				</TouchableOpacity>
 
 				<View style={{ marginTop: 30 }}>
-					<Text
-						style={{
-							fontFamily: "RobotoMono_500Medium",
-							textAlign: "center",
-							fontSize: 20,
-						}}
-					>
-						Log in
-					</Text>
+					<Text style={styles.loginTextPlace}>Log in</Text>
 				</View>
 
 				<View style={{ flex: 1, marginHorizontal: 40 }}>
 					<TextInput
-						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							borderBottomColor: "#707070",
-							borderBottomWidth: 1,
-							marginVertical: 56,
-							paddingBottom: 16,
-							fontSize: 16,
-						}}
+						style={styles.emailBox}
 						value={email}
 						onChangeText={setEmail}
 						placeholder='EMAIL'
@@ -119,13 +99,7 @@ const LoginScreen = (props) => {
 						keyboardType='email-address'
 					/>
 					<TextInput
-						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							borderBottomColor: "#707070",
-							borderBottomWidth: 1,
-							paddingBottom: 16,
-							fontSize: 16,
-						}}
+						style={styles.passwordBox}
 						value={password}
 						onChangeText={setPassword}
 						placeholder='PASSWORD'
@@ -133,45 +107,14 @@ const LoginScreen = (props) => {
 						autoCorrect={false}
 						textContentType='password'
 						placeholderTextColor='#707070'
+						secureTextEntry={true}
 					/>
 
-					<TouchableOpacity
-						style={{
-							alignItems: "center",
-							alignSelf: "center",
-						}}
-						onPress={() => {}}
-					>
-						<Text
-							style={{
-								fontFamily: "SourceSansPro_400Regular",
-								fontSize: 16,
-								marginTop: 24,
-							}}
-						>
-							Forgot your password?
-						</Text>
+					<TouchableOpacity style={styles.forgotBox} onPress={() => {}}>
+						<Text style={styles.forgotText}>Forgot your password?</Text>
 					</TouchableOpacity>
-					<TouchableOpacity
-						style={{
-							backgroundColor: "#000000",
-							alignItems: "center",
-							borderRadius: 20,
-							marginTop: 30,
-							marginHorizontal: 40,
-						}}
-						onPress={() => loginFunc()}
-					>
-						<Text
-							style={{
-								fontFamily: "SourceSansPro_400Regular",
-								color: "#FFFFFF",
-								paddingVertical: 10,
-								fontSize: 16,
-							}}
-						>
-							LOGIN
-						</Text>
+					<TouchableOpacity style={styles.loginBox} onPress={() => loginFunc()}>
+						<Text style={styles.loginText}>LOGIN</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -182,4 +125,49 @@ const LoginScreen = (props) => {
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	emailBox: {
+		fontFamily: "SourceSansPro_700Bold",
+		fontSize: 18,
+		marginTop: 10,
+	},
+	passwordBox: {
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+		borderBottomWidth: 1,
+		paddingBottom: 16,
+		fontSize: 16,
+	},
+	forgotText: {
+		fontFamily: "SourceSansPro_400Regular",
+		fontSize: 16,
+		marginTop: 24,
+	},
+	forgotBox: {
+		alignItems: "center",
+		alignSelf: "center",
+	},
+	loginBox: {
+		backgroundColor: "#000000",
+		alignItems: "center",
+		borderRadius: 20,
+		marginTop: 30,
+		marginHorizontal: 40,
+	},
+	loginText: {
+		fontFamily: "SourceSansPro_400Regular",
+		color: "#FFFFFF",
+		paddingVertical: 10,
+		fontSize: 16,
+	},
+	loginTextPlace: {
+		fontFamily: "RobotoMono_500Medium",
+		textAlign: "center",
+		fontSize: 20,
+	},
+	backArrow: {
+		marginLeft: 40,
+		marginTop: 50,
+		alignSelf: "flex-start",
+	},
+});
