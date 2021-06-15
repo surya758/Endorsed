@@ -1,16 +1,4 @@
 import React, { useState } from "react";
-import {
-	RobotoMono_300Light,
-	RobotoMono_400Regular,
-	RobotoMono_500Medium,
-	useFonts,
-} from "@expo-google-fonts/roboto-mono";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	SourceSansPro_600SemiBold,
-	SourceSansPro_700Bold,
-} from "@expo-google-fonts/source-sans-pro";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -19,14 +7,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const ProfileScreen = () => {
 	const [filter, setFilter] = useState("");
 	const insets = useSafeAreaInsets();
-	let [fontsLoaded] = useFonts({
-		RobotoMono_400Regular,
-		RobotoMono_500Medium,
-		SourceSansPro_400Regular,
-	});
-	if (!fontsLoaded) {
-		return <View />;
-	}
 
 	return (
 		<>

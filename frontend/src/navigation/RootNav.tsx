@@ -1,19 +1,21 @@
-import CoreNav from "./CoreNav";
-import LoginScreen from "../screens/Auth/LoginScreen";
+import React, { useState } from "react";
+
+import AuthRoute from "./AuthRoute";
+import CoreRoute from "./CoreRoute";
 import { NavigationContainer } from "@react-navigation/native";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import ProductDetailScreen from "../screens/Product/ProductDetailScreen";
-import React from "react";
-import RegisterScreen from "../screens/Auth/RegisterScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
+type user = { username: string };
+
 const RootNavigator = () => {
+	// const [userData, setUserData] = useState<user | "loading" | null>("loading");
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName='Core'>
+			<Stack.Navigator initialRouteName='Onboarding'>
 				<Stack.Screen
 					name='Onboarding'
 					component={OnboardingScreen}
@@ -22,22 +24,8 @@ const RootNavigator = () => {
 					}}
 				/>
 				<Stack.Screen
-					name='Welcome'
-					component={WelcomeScreen}
-					options={{
-						headerShown: false,
-					}}
-				/>
-				<Stack.Screen
-					name='Register'
-					component={RegisterScreen}
-					options={{
-						headerShown: false,
-					}}
-				/>
-				<Stack.Screen
-					name='Login'
-					component={LoginScreen}
+					name='AuthRoute'
+					component={AuthRoute}
 					options={{
 						headerShown: false,
 					}}
@@ -50,8 +38,8 @@ const RootNavigator = () => {
 					}}
 				/>
 				<Stack.Screen
-					name='Core'
-					component={CoreNav}
+					name='CoreRoute'
+					component={CoreRoute}
 					options={{
 						headerShown: false,
 					}}

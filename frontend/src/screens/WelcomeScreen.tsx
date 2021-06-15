@@ -1,29 +1,9 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {
-	RobotoMono_300Light,
-	RobotoMono_500Medium,
-	useFonts,
-} from "@expo-google-fonts/roboto-mono";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	SourceSansPro_600SemiBold,
-} from "@expo-google-fonts/source-sans-pro";
 
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 
 const WelcomeScreen = (props) => {
-	let [fontsLoaded] = useFonts({
-		RobotoMono_500Medium,
-		RobotoMono_300Light,
-		SourceSansPro_300Light,
-		SourceSansPro_400Regular,
-		SourceSansPro_600SemiBold,
-	});
-	if (!fontsLoaded) {
-		return <View />;
-	}
 	return (
 		<>
 			<View

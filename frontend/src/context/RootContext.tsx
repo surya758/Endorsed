@@ -8,11 +8,9 @@ export const RootContextProvider = ({ children }) => {
 	const [userInfo, setUserInfo] = useState({});
 	const getData = async () => {
 		try {
-			const jsonValue = await AsyncStorage.getItem("accessUserCred").then(
-				(res) => {
-					setUserInfo(res);
-				}
-			);
+			const jsonValue = await AsyncStorage.getItem("accessUserCred");
+			jsonValue != null ? JSON.parse(jsonValue) : null;
+			setUserInfo(JSON.parse(jsonValue));
 		} catch (e) {
 			// error reading value
 		}

@@ -7,15 +7,18 @@ const ONBOARDING_DATA = [
 	{
 		title: "Get Recommendations.",
 		bodyDetails: "Receive recommendation according to the your needs.",
+		image: require("../assets/images/ob1.jpg"),
 	},
 	{
 		title: "Place Recommendation.",
 		bodyDetails: "Tried out a new product and like it? Recommend it to others!",
+		image: require("../assets/images/ob2.jpg"),
 	},
 	{
 		title: "Share Opinions.",
 		bodyDetails:
 			"Got something to share about a particular product? Be it good or bad...",
+		image: require("../assets/images/ob3.jpg"),
 	},
 ];
 
@@ -24,11 +27,11 @@ const OnboardingScreen = ({ navigation }) => {
 	const onPressedNext = (index: number) => {
 		if (index < ONBOARDING_DATA.length - 1) {
 			myList.current.scrollToIndex({ index: index + 1 });
+			return;
 		} else {
-			navigation.navigate("Welcome");
+			navigation.navigate("AuthRoute");
 		}
 	};
-	const [CurrentPage, setCurrentPage] = useState<number>(0);
 	return (
 		<View style={{ flex: 1 }}>
 			<FlatList
@@ -41,8 +44,8 @@ const OnboardingScreen = ({ navigation }) => {
 						<OnboardingDetails
 							item={item}
 							navigation={navigation}
-							index={ONBOARDING_DATA.length}
 							onPressedNext={() => onPressedNext(index)}
+							index={index}
 						/>
 					);
 				}}

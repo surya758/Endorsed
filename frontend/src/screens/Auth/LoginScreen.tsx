@@ -6,27 +6,29 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useState } from "react";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	useFonts,
-} from "@expo-google-fonts/source-sans-pro";
+import React, { useContext, useEffect, useState } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
-import { RobotoMono_500Medium } from "@expo-google-fonts/roboto-mono";
+import RootContext from "../../context/RootContext";
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const LoginScreen = (props) => {
+const LoginScreen = (props: any) => {
+	const userInfo = useContext(RootContext);
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	let [fontsLoaded] = useFonts({
-		RobotoMono_500Medium,
-		SourceSansPro_300Light,
-		SourceSansPro_400Regular,
-	});
+	console.log(userInfo);
+
+	const storeData = async (value: valueType) => {
+		try {
+			const jsonValue = JSON.stringify(value);
+			await AsyncStorage.setItem("accessUserCred", jsonValue);
+		} catch (e) {
+			// saving error
+		}
+	};
 	const loginFunc = async () => {
 		try {
 			await axios
@@ -34,16 +36,11 @@ const LoginScreen = (props) => {
 					email: email,
 					password: password,
 				})
-				.then((res) => console.log(res.data));
-			props.navigation.navigate("Core");
+				.then((res) => storeData(res.data));
+			props.navigation.navigate("Core", { screen: "Home" });
 		} catch (error) {
-			Alert.alert("Uh oh...", `${error}`, [
-				{
-					text: "Cancel",
-					onPress: () => console.log("Cancel Pressed"),
-					style: "cancel",
-				},
-				{ text: "OK", onPress: () => console.log("OK Pressed") },
+			Alert.alert("Unauthorised!", "Incorrect email or password!", [
+				{ text: "Okay", onPress: () => console.log("Okay Pressed") },
 			]);
 			console.error({ error });
 		}
@@ -66,9 +63,6 @@ const LoginScreen = (props) => {
 	// 		console.log({ error });
 	// 	}
 	// };
-	if (!fontsLoaded) {
-		return null;
-	}
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ height: insets.top }} />
@@ -127,9 +121,12 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
 	emailBox: {
-		fontFamily: "SourceSansPro_700Bold",
-		fontSize: 18,
-		marginTop: 10,
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+		borderBottomWidth: 1,
+		paddingBottom: 16,
+		fontSize: 16,
+		marginTop: 32,
 	},
 	passwordBox: {
 		fontFamily: "SourceSansPro_400Regular",
@@ -137,6 +134,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		paddingBottom: 16,
 		fontSize: 16,
+		marginTop: 32,
 	},
 	forgotText: {
 		fontFamily: "SourceSansPro_400Regular",

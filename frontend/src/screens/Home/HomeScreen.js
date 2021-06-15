@@ -1,66 +1,20 @@
-// import Animated, { interpolateNode } from "react-native-reanimated";
-
 import {
 	Animated,
-	Button,
 	Dimensions,
 	FlatList,
-	Image,
-	StatusBar,
 	StyleSheet,
 	Text,
 	View,
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import {
-	RobotoMono_300Light,
-	RobotoMono_400Regular,
-	RobotoMono_500Medium,
-	useFonts,
-} from "@expo-google-fonts/roboto-mono";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	SourceSansPro_600SemiBold,
-	SourceSansPro_700Bold,
-} from "@expo-google-fonts/source-sans-pro";
 
 import Endorsed from "../../assets/icons/Endorsed";
 import { Ionicons } from "@expo/vector-icons";
 import ProductCard from "../../components/ProductCard";
 import ProductContext from "../../context/ProductContext";
-import { inlineStyles } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const windowWidth = Dimensions.get("window").width;
-// import axios from "axios";
-
-// const testFlatData0 = [
-// 	{
-// 		imageURL:
-// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-// 		title: "title1",
-// 		description: "des1",
-// 	},
-// 	{
-// 		imageURL:
-// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-// 		title: "title2",
-// 		description: "des2",
-// 	},
-// 	{
-// 		imageURL:
-// 			"https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png",
-// 		title: "title3",
-// 		description: "des3",
-// 	},
-// ];
-
-// type productType = {
-// 	imageURL: string;
-// 	title: string;
-// 	description: string;
-// };
 
 const HomeScreen = ({ navigation }) => {
 	const insets = useSafeAreaInsets();
@@ -90,19 +44,6 @@ const HomeScreen = ({ navigation }) => {
 	// 	getProductFunc();
 	// }, []);
 
-	let [fontsLoaded] = useFonts({
-		RobotoMono_500Medium,
-		RobotoMono_300Light,
-		RobotoMono_400Regular,
-		SourceSansPro_300Light,
-		SourceSansPro_400Regular,
-		SourceSansPro_600SemiBold,
-		SourceSansPro_700Bold,
-	});
-	if (!fontsLoaded) {
-		return <View />;
-	}
-
 	return (
 		<View style={{ flex: 1 }}>
 			<View
@@ -117,12 +58,7 @@ const HomeScreen = ({ navigation }) => {
 					styles.headerBox,
 					{
 						top: insets.top,
-						left: 0,
-						right: 0,
-
 						height: HEADER_HEIGHT,
-						borderBottomColor: "#D0D0D0",
-						borderBottomWidth: 1,
 						transform: [{ translateY: translateY }],
 					},
 				]}
@@ -131,18 +67,7 @@ const HomeScreen = ({ navigation }) => {
 				<Text style={styles.headerText}>ENDORSED</Text>
 				<Ionicons name='bookmarks' size={24} color='black' />
 			</Animated.View>
-			{/* <Animated.View
-				style={{
-					position: "absolute",
-					left: 0,
-					right: 0,
-					top: 0,
-					height: HEADER_HEIGHT,
-					backgroundColor: "grey",
-					zIndex: 1000,
-					transform: [{ translateY: translateY }],
-				}}
-			/> */}
+
 			<FlatList
 				scrollEventThrottle={16}
 				style={{ paddingTop: HEADER_HEIGHT }}
@@ -162,48 +87,11 @@ const HomeScreen = ({ navigation }) => {
 				}}
 				contentContainerStyle={{
 					// padding: 5,
-					paddingTop: 10,
+					paddingTop: 5,
 				}}
-				ListFooterComponent={<View style={{ height: 70 }} />}
+				ListFooterComponent={<View style={{ height: 60 }} />}
 			/>
 		</View>
-
-		// <>
-		// 	<View style={{ height: insets.top }} />
-		// 	<View
-		// 		style={[
-		// 			styles.headerBox,
-		// 			{
-		// 				top: insets.top,
-		// 				height: 50,
-		// 				borderBottomColor: "#D0D0D0",
-		// 				borderBottomWidth: 1,
-		// 			},
-		// 		]}
-		// 	>
-		// 		<Endorsed />
-		// 		<Text style={styles.headerText}>ENDORSED</Text>
-		// 		<Ionicons name='bookmarks' size={24} color='black' />
-		// 	</View>
-		// 	<View style={{ flex: 1 }}>
-		// 		<FlatList
-		// 			data={product}
-		// 			keyExtractor={(product) => product.title}
-		// 			renderItem={({ item }) => {
-		// 				return <ProductCard item={item} navigation={navigation} />;
-		// 			}}
-		// 			showsHorizontalScrollIndicator={false}
-		// 			showsVerticalScrollIndicator={true}
-		// 			ItemSeparatorComponent={() => {
-		// 				return <View style={{ height: 15 }} />;
-		// 			}}
-		// 			contentContainerStyle={{
-		// 				padding: 5,
-		// 				paddingTop: 50,
-		// 			}}
-		// 		/>
-		// 	</View>
-		// </>
 	);
 };
 
@@ -218,6 +106,10 @@ const styles = StyleSheet.create({
 		backgroundColor: "#f3f3f3",
 		width: windowWidth,
 		overflow: "hidden",
+		left: 0,
+		right: 0,
+		borderBottomColor: "#D0D0D0",
+		borderBottomWidth: 1,
 	},
 	headerText: {
 		fontSize: 20,

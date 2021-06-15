@@ -6,21 +6,16 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useState } from "react";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	useFonts,
-} from "@expo-google-fonts/source-sans-pro";
+import React, { useRef, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
-import { RobotoMono_500Medium } from "@expo-google-fonts/roboto-mono";
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const RegisterScreen = (props) => {
-	const storeData = async (value) => {
+const RegisterScreen = (props: any) => {
+	const [hidePass, setHidePass] = useState(true);
+	const storeData = async (value: valueType) => {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem("accessUserCred", jsonValue);
@@ -38,15 +33,11 @@ const RegisterScreen = (props) => {
 					name: userFullName,
 				})
 				.then((res) => storeData(res.data));
-			props.navigation.navigate("Core");
+			console.log("this is working");
+			props.navigation.navigate("Core", { screen: "Home" });
 		} catch (err) {
 			Alert.alert("Uh oh...", `${err}`, [
-				{
-					text: "Cancel",
-					onPress: () => console.log("Cancel Pressed"),
-					style: "cancel",
-				},
-				{ text: "OK", onPress: () => console.log("OK Pressed") },
+				{ text: "Okay", onPress: () => console.log("Okay Pressed") },
 			]);
 			console.log({ err });
 		}
@@ -55,25 +46,13 @@ const RegisterScreen = (props) => {
 	const [userFullName, setUserFullName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
 	const [userPassword, setUserPassword] = useState("");
-	let [fontsLoaded] = useFonts({
-		RobotoMono_500Medium,
-		SourceSansPro_300Light,
-		SourceSansPro_400Regular,
-	});
 
-	if (!fontsLoaded) {
-		return null;
-	}
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ height: insets.top }} />
 			<View style={{ flex: 4 }}>
 				<TouchableOpacity
-					style={{
-						marginLeft: 40,
-						marginTop: 50,
-						alignSelf: "flex-start",
-					}}
+					style={styles.backIcon}
 					onPress={() => {
 						props.navigation.navigate("Welcome");
 					}}
@@ -82,15 +61,7 @@ const RegisterScreen = (props) => {
 				</TouchableOpacity>
 
 				<View style={{ marginTop: 30 }}>
-					<Text
-						style={{
-							fontFamily: "RobotoMono_500Medium",
-							textAlign: "center",
-							fontSize: 20,
-						}}
-					>
-						Register
-					</Text>
+					<Text style={styles.registerText}>Register</Text>
 				</View>
 
 				<View
@@ -99,14 +70,7 @@ const RegisterScreen = (props) => {
 					}}
 				>
 					<TextInput
-						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							borderBottomColor: "#707070",
-							borderBottomWidth: 1,
-							paddingBottom: 16,
-							fontSize: 16,
-							marginTop: 32,
-						}}
+						style={styles.nameStyle}
 						value={userFullName}
 						onChangeText={setUserFullName}
 						placeholder='FULL NAME'
@@ -115,14 +79,7 @@ const RegisterScreen = (props) => {
 						placeholderTextColor='#707070'
 					/>
 					<TextInput
-						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							borderBottomColor: "#707070",
-							borderBottomWidth: 1,
-							paddingBottom: 16,
-							marginVertical: 32,
-							fontSize: 16,
-						}}
+						style={styles.emailStyle}
 						value={userEmail}
 						onChangeText={setUserEmail}
 						placeholder='EMAIL'
@@ -132,14 +89,35 @@ const RegisterScreen = (props) => {
 						placeholderTextColor='#707070'
 						keyboardType='email-address'
 					/>
-					<TextInput
+					<View
 						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							borderBottomColor: "#707070",
+							flexDirection: "row",
 							borderBottomWidth: 1,
 							paddingBottom: 16,
-							fontSize: 16,
+							justifyContent: "space-between",
 						}}
+					>
+						<TextInput
+							style={styles.passwordStyle}
+							value={userPassword}
+							onChangeText={setUserPassword}
+							placeholder='PASSWORD'
+							autoCapitalize='none'
+							autoCorrect={false}
+							textContentType='password'
+							placeholderTextColor='#707070'
+							secureTextEntry={hidePass ? true : false}
+						/>
+						<TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+							<Ionicons
+								name={hidePass ? "eye-off" : "eye"}
+								size={24}
+								color='#000'
+							/>
+						</TouchableOpacity>
+					</View>
+					{/* <TextInput
+						style={styles.passwordStyle}
 						value={userPassword}
 						onChangeText={setUserPassword}
 						placeholder='PASSWORD'
@@ -147,8 +125,8 @@ const RegisterScreen = (props) => {
 						autoCorrect={false}
 						textContentType='password'
 						placeholderTextColor='#707070'
-						secureTextEntry={true}
-					/>
+						secureTextEntry={hidePass ? true : false}
+					/> */}
 					<View style={{ flexDirection: "row", marginTop: 10 }}>
 						<Ionicons name='checkmark' size={16} color='black' />
 						<Text
@@ -164,40 +142,23 @@ const RegisterScreen = (props) => {
 							alignSelf: "center",
 						}}
 					>
-						<Text
-							style={{
-								fontFamily: "SourceSansPro_400Regular",
-								fontSize: 16,
-								marginTop: 16,
-							}}
-						>
-							Forgot your password?
-						</Text>
+						<Text style={styles.forgotText}>Forgot your password?</Text>
 					</TouchableOpacity>
 				</View>
 				<TouchableOpacity
-					style={{
-						backgroundColor: "#000000",
-						alignItems: "center",
-						borderRadius: 20,
-
-						marginHorizontal: 60,
-						marginVertical: 50,
-					}}
+					style={styles.createAccountBox}
 					onPress={() => createUserFunc()}
 				>
-					<Text
-						style={{
-							fontFamily: "SourceSansPro_400Regular",
-							color: "#FFFFFF",
-							paddingVertical: 10,
-							fontSize: 16,
-						}}
-					>
-						CREATE ACCOUNT
-					</Text>
+					<Text style={styles.createAccountText}>CREATE ACCOUNT</Text>
 				</TouchableOpacity>
 			</View>
+			{/* <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+				<Ionicons
+					name={hidePass ? "eye-off" : "eye"}
+					size={24}
+					color='#2940C2'
+				/>
+			</TouchableOpacity> */}
 			<View style={{ flex: 2 }}></View>
 		</View>
 	);
@@ -205,4 +166,56 @@ const RegisterScreen = (props) => {
 
 export default RegisterScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	backIcon: {
+		marginLeft: 40,
+		marginTop: 50,
+		alignSelf: "flex-start",
+	},
+	registerText: {
+		fontFamily: "SourceSansPro_400Regular",
+		textAlign: "center",
+		fontSize: 20,
+	},
+	nameStyle: {
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+		borderBottomWidth: 1,
+		paddingBottom: 16,
+		fontSize: 16,
+		marginTop: 32,
+	},
+	emailStyle: {
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+		borderBottomWidth: 1,
+		paddingBottom: 16,
+		marginVertical: 32,
+		fontSize: 16,
+	},
+	passwordStyle: {
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+
+		fontSize: 16,
+	},
+	forgotText: {
+		fontFamily: "SourceSansPro_400Regular",
+		fontSize: 16,
+		marginTop: 16,
+	},
+	createAccountBox: {
+		backgroundColor: "#000000",
+		alignItems: "center",
+		borderRadius: 20,
+
+		marginHorizontal: 60,
+		marginVertical: 50,
+	},
+	createAccountText: {
+		fontFamily: "SourceSansPro_400Regular",
+		color: "#FFFFFF",
+		paddingVertical: 10,
+		fontSize: 16,
+	},
+});

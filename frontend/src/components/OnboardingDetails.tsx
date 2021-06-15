@@ -1,39 +1,35 @@
+import Buttons, { SkipButton } from "./Buttons";
 import {
 	Dimensions,
+	Image,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from "react-native";
-import {
-	SourceSansPro_300Light,
-	SourceSansPro_400Regular,
-	useFonts,
-} from "@expo-google-fonts/source-sans-pro";
 
 import Apploading from "expo-app-loading";
 import React from "react";
-import { RobotoMono_500Medium } from "@expo-google-fonts/roboto-mono";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const windowWidth = Dimensions.get("window").width;
 
 const OnboardingDetails = (props) => {
-	let [fontsLoaded] = useFonts({
-		RobotoMono_500Medium,
-		SourceSansPro_300Light,
-		SourceSansPro_400Regular,
-	});
-
 	const insets = useSafeAreaInsets();
-	if (!fontsLoaded) {
-		return <Apploading />;
-	}
 
 	return (
 		<View style={{ width: windowWidth }}>
-			<View style={{ backgroundColor: "red", height: insets.top }} />
-			<View style={styles.topContainer}></View>
+			<View style={styles.topContainer}>
+				<Image
+					source={props.item.image}
+					style={{
+						flex: 1,
+						width: undefined,
+						height: undefined,
+						resizeMode: "cover",
+					}}
+				/>
+			</View>
 
 			<View style={styles.bottomContainer}>
 				<View>
@@ -42,20 +38,26 @@ const OnboardingDetails = (props) => {
 					<Text style={styles.body}>{props.item.bodyDetails}</Text>
 				</View>
 				<View style={styles.skipAndNext}>
-					<TouchableOpacity
-						onPress={() => {
-							props.navigation.navigate("Welcome");
-						}}
-					>
-						<Text>Skip</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						style={styles.nextButton}
-						onPress={() => props.onPressedNext()}
-					>
-						<Text>Next</Text>
-					</TouchableOpacity>
+					{props.index === 2 ? (
+						<SkipButton
+							onPress={() => {
+								props.navigation.navigate("AuthRoute");
+							}}
+							skip={null}
+						/>
+					) : (
+						<SkipButton
+							onPress={() => {
+								props.navigation.navigate("AuthRoute");
+							}}
+							skip='Skip'
+						/>
+					)}
+					{props.index === 2 ? (
+						<Buttons onPress={() => props.onPressedNext()} text='Get Started' />
+					) : (
+						<Buttons onPress={() => props.onPressedNext()} text='Next' />
+					)}
 				</View>
 			</View>
 

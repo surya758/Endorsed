@@ -56,11 +56,11 @@ const userSchema = mongoose.Schema(
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
 
-userSchema.virtual('comments', {
-  ref: 'Comment',
-  foreignField: 'user',
-  localField: '_id',
-});
+// userSchema.virtual('comments', {
+//   ref: 'Comment',
+//   foreignField: 'user',
+//   localField: '_id',
+// });
 
 /**
  * Check if email is taken

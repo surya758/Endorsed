@@ -70,19 +70,19 @@ const testFlatData0 = [
 export const ProductContextProvider = ({ children }) => {
 	const [testFlatData, setTestFlatData] =
 		useState<Array<productType>>(testFlatData0);
-	const getProductFunc = async () => {
-		try {
-			await axios.get("http://10.0.2.2:3000/v1/products").then((res) => {
-				setTestFlatData(res.data);
-			});
-		} catch (err) {
-			// console.log(err);
-		}
-	};
+	// const getProductFunc = async () => {
+	// 	try {
+	// 		await axios.get("http://10.0.2.2:3000/v1/products").then((res) => {
+	// 			setTestFlatData(res.data);
+	// 		});
+	// 	} catch (err) {
+	// 		// console.log(err);
+	// 	}
+	// };
 
-	useEffect(() => {
-		getProductFunc();
-	}, []);
+	// useEffect(() => {
+	// 	getProductFunc();
+	// }, []);
 	// const getProductsFunc = async () => {
 	// 	try {
 	// 		await axios.get("http://10.0.2.2:3000/v1/products/");

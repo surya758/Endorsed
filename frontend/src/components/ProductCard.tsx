@@ -1,9 +1,4 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {
-	Lato_300Light,
-	Lato_400Regular,
-	useFonts,
-} from "@expo-google-fonts/lato";
 import React, { useEffect, useState } from "react";
 
 import { AntDesign } from "@expo/vector-icons";
@@ -20,13 +15,6 @@ type PropType = {
 };
 
 const ProductCard = (props: PropType) => {
-	let [fontsLoaded] = useFonts({
-		Lato_400Regular,
-		Lato_300Light,
-	});
-	if (!fontsLoaded) {
-		return <View />;
-	}
 	return (
 		<View
 			style={{
@@ -40,6 +28,7 @@ const ProductCard = (props: PropType) => {
 				alignItems: "center",
 				backgroundColor: "#fff",
 				borderRadius: 5,
+				marginHorizontal: 5,
 			}}
 		>
 			<TouchableOpacity
