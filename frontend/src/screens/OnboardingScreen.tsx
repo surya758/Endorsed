@@ -7,17 +7,16 @@ const ONBOARDING_DATA = [
 	{
 		title: "Get Recommendations.",
 		bodyDetails: "Receive recommendation according to the your needs.",
-		image: require("../assets/images/ob1.jpg"),
+		image: require("../assets/images/onb1.jpeg"),
 	},
 	{
 		title: "Place Recommendation.",
 		bodyDetails: "Tried out a new product and like it? Recommend it to others!",
-		image: require("../assets/images/ob2.jpg"),
+		image: require("../assets/images/onb2.jpeg"),
 	},
 	{
 		title: "Share Opinions.",
-		bodyDetails:
-			"Got something to share about a particular product? Be it good or bad...",
+		bodyDetails: "Got something to share about a particular product? Be it good or bad...",
 		image: require("../assets/images/ob3.jpg"),
 	},
 ];
@@ -29,7 +28,7 @@ const OnboardingScreen = ({ navigation }) => {
 			myList.current.scrollToIndex({ index: index + 1 });
 			return;
 		} else {
-			navigation.navigate("AuthRoute");
+			navigation.navigate("Welcome");
 		}
 	};
 	return (

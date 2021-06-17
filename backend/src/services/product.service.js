@@ -52,10 +52,21 @@ const updateProductById = async (productId, updateBody) => {
   return product;
 };
 
+const getProjectionsByFields = async (fieldParams) => {
+  let projections;
+  if (fieldParams.fields) {
+    projections = await fieldParams.fields.split(',').join(' ').split(/,| /);
+    return projections;
+  } else {
+    return null;
+  }
+};
+
 module.exports = {
   createProduct,
   queryProducts,
   getProductById,
   deleteProductById,
   updateProductById,
+  getProjectionsByFields,
 };

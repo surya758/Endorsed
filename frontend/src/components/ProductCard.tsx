@@ -45,9 +45,7 @@ const ProductCard = (props: PropType) => {
 						style={styles.image}
 					/>
 					<View style={{ justifyContent: "space-evenly", marginLeft: 15 }}>
-						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>
-							{props.item.title}
-						</Text>
+						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>{props.item.title}</Text>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 14 }}>
 							{/* {props.item.manufacturer} */} Google
 						</Text>
@@ -76,9 +74,7 @@ const ProductCard = (props: PropType) => {
 
 							<Text style={styles.rating}>{/* {props.item.rating} */} 2.9</Text>
 							<AntDesign name='eye' size={14} color='grey' />
-							<Text style={styles.views}>
-								{/* {props.item.upvotes} */} 1500
-							</Text>
+							<Text style={styles.views}>{/* {props.item.upvotes} */} 1500</Text>
 						</View>
 					</View>
 				</View>

@@ -15,12 +15,12 @@ import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const LoginScreen = (props: any) => {
-	const userInfo = useContext(RootContext);
+	const { userInfo, userToken } = useContext(RootContext);
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	console.log(userInfo);
-
+	console.log(userToken);
 	const storeData = async (value: valueType) => {
 		try {
 			const jsonValue = JSON.stringify(value);
@@ -37,7 +37,7 @@ const LoginScreen = (props: any) => {
 					password: password,
 				})
 				.then((res) => storeData(res.data));
-			props.navigation.navigate("Core", { screen: "Home" });
+			props.navigation.navigate("CoreNav");
 		} catch (error) {
 			Alert.alert("Unauthorised!", "Incorrect email or password!", [
 				{ text: "Okay", onPress: () => console.log("Okay Pressed") },

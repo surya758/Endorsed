@@ -1,12 +1,5 @@
 import Buttons, { SkipButton } from "./Buttons";
-import {
-	Dimensions,
-	Image,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import Apploading from "expo-app-loading";
 import React from "react";
@@ -33,7 +26,6 @@ const OnboardingDetails = (props) => {
 
 			<View style={styles.bottomContainer}>
 				<View>
-					<View style={styles.line} />
 					<Text style={styles.header}>{props.item.title}</Text>
 					<Text style={styles.body}>{props.item.bodyDetails}</Text>
 				</View>
@@ -41,14 +33,14 @@ const OnboardingDetails = (props) => {
 					{props.index === 2 ? (
 						<SkipButton
 							onPress={() => {
-								props.navigation.navigate("AuthRoute");
+								props.navigation.navigate("Welcome");
 							}}
 							skip={null}
 						/>
 					) : (
 						<SkipButton
 							onPress={() => {
-								props.navigation.navigate("AuthRoute");
+								props.navigation.navigate("Welcome");
 							}}
 							skip='Skip'
 						/>
@@ -73,13 +65,6 @@ const styles = StyleSheet.create({
 	bottomContainer: {
 		flex: 2,
 		justifyContent: "space-between",
-	},
-	line: {
-		height: 1,
-		backgroundColor: "rgba(0,0,0,1)",
-		opacity: 0.3,
-		alignSelf: "stretch",
-		padding: 0,
 	},
 	header: {
 		fontFamily: "RobotoMono_500Medium",

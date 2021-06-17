@@ -1,16 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
-
 import LoginScreen from "../screens/Auth/LoginScreen";
+import OnboardingScreen from "../screens/OnboardingScreen";
 import React from "react";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
+import { StyleSheet } from "react-native";
+import WelcomeScreen from "../screens/Auth/WelcomeScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-const AuthNav = () => {
+const AuthRoute = () => {
 	return (
 		<Stack.Navigator>
+			<Stack.Screen
+				name='Onboarding'
+				component={OnboardingScreen}
+				options={{
+					headerShown: false,
+				}}
+			/>
 			<Stack.Screen
 				name='Welcome'
 				component={WelcomeScreen}
@@ -36,6 +43,6 @@ const AuthNav = () => {
 	);
 };
 
-export default AuthNav;
+export default AuthRoute;
 
 const styles = StyleSheet.create({});

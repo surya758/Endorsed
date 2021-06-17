@@ -1,10 +1,6 @@
 import "react-native-gesture-handler";
 
-import {
-	Lato_300Light,
-	Lato_400Regular,
-	Lato_700Bold,
-} from "@expo-google-fonts/lato";
+import { Lato_300Light, Lato_400Regular, Lato_700Bold } from "@expo-google-fonts/lato";
 import {
 	RobotoMono_300Light,
 	RobotoMono_400Regular,
@@ -20,11 +16,9 @@ import {
 } from "@expo-google-fonts/source-sans-pro";
 
 import AppLoading from "expo-app-loading";
-import { ProductContextProvider } from "./src/context/ProductContext";
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { RootContextProvider } from "./src/context/RootContext";
-import RootNav from "./src/navigation/RootNav";
-import { StatusBar } from "expo-status-bar";
+import RootState from "./src/StateManagement";
 
 export default () => {
 	let [fontsLoaded] = useFonts({
@@ -42,12 +36,11 @@ export default () => {
 	});
 	if (!fontsLoaded) {
 		return <AppLoading />;
+	} else {
+		return (
+			<NavigationContainer>
+				<RootState />
+			</NavigationContainer>
+		);
 	}
-	return (
-		<ProductContextProvider>
-			<RootContextProvider>
-				<RootNav />
-			</RootContextProvider>
-		</ProductContextProvider>
-	);
 };

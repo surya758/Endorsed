@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { FontAwesome } from "@expo/vector-icons";
 import HomeScreen from "../screens/Home/HomeScreen";
+import HomeStackNav from "./HomeStackNav";
 import { Ionicons } from "@expo/vector-icons";
-import NotificationScreen from "../screens/Home/NotificationScreen";
-import ProfileScreen from "../screens/Home/ProfileScreen";
+import NotificationScreen from "../screens/Notification/NotificationScreen";
+import ProfileScreen from "../screens/Profile/ProfileScreen";
 import React from "react";
-import SearchScreen from "../screens/Home/SearchScreen";
+import SearchScreen from "../screens/Search/SearchScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
-const CoreNav = () => {
+const CoreRoute = () => {
 	return (
 		<Tab.Navigator
 			tabBarOptions={{
@@ -30,9 +30,7 @@ const CoreNav = () => {
 							iconName = focused ? "search" : "search-outline";
 							break;
 						case "Notification":
-							iconName = focused
-								? "notifications-sharp"
-								: "notifications-outline";
+							iconName = focused ? "notifications-sharp" : "notifications-outline";
 							break;
 						case "Profile":
 							iconName = focused ? "person" : "person-outline";
@@ -43,7 +41,7 @@ const CoreNav = () => {
 				},
 			})}
 		>
-			<Tab.Screen name='Home' component={HomeScreen} />
+			<Tab.Screen name='Home' component={HomeStackNav} />
 			<Tab.Screen name='Search' component={SearchScreen} />
 			<Tab.Screen name='Notification' component={NotificationScreen} />
 			<Tab.Screen name='Profile' component={ProfileScreen} />
@@ -51,6 +49,6 @@ const CoreNav = () => {
 	);
 };
 
-export default CoreNav;
+export default CoreRoute;
 
 const styles = StyleSheet.create({});
