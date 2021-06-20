@@ -26,7 +26,10 @@ const RootNav = () => {
 			</ProductContextProvider>
 		)
 	) : (
-		<AuthRoute />
+		<ProductContextProvider>
+			<CoreRoute />
+		</ProductContextProvider>
+		// <AuthRoute />
 	);
 };
 

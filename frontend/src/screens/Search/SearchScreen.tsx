@@ -1,5 +1,12 @@
+import {
+	Keyboard,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,29 +16,32 @@ const SearchScreen = () => {
 	const insets = useSafeAreaInsets();
 
 	return (
-		<>
-			<View style={{ height: insets.top, backgroundColor: "red" }} />
-			<View style={styles.headerBox}>
-				<Text style={styles.headerText}>SEARCH</Text>
-			</View>
-			<View style={{ flex: 1 }}>
-				<View style={styles.searchBox}>
-					<Ionicons
-						name='search-outline'
-						size={30}
-						color='#404040'
-						style={{ marginHorizontal: 20 }}
-					/>
-					<TextInput
-						style={styles.searchText}
-						value={filter}
-						onChangeText={setFilter}
-						placeholder='Search...'
-						placeholderTextColor='#707070'
-					/>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<>
+				<View style={{ height: insets.top, backgroundColor: "red" }} />
+				<View style={styles.headerBox}>
+					<Text style={styles.headerText}>SEARCH</Text>
 				</View>
-			</View>
-		</>
+				<View style={{ flex: 1 }}>
+					<View style={styles.searchBox}>
+						<Ionicons
+							name='search-outline'
+							size={30}
+							color='#404040'
+							style={{ marginHorizontal: 20 }}
+						/>
+						<TextInput
+							style={styles.searchText}
+							value={filter}
+							onChangeText={setFilter}
+							placeholder='Search...'
+							placeholderTextColor='#707070'
+							autoFocus={true}
+						/>
+					</View>
+				</View>
+			</>
+		</TouchableWithoutFeedback>
 	);
 };
 

@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 type PropType = {
 	item: {
+		id: string;
 		imageURL: string;
 		title: String;
 		description: String;
@@ -33,7 +34,7 @@ const ProductCard = (props: PropType) => {
 		>
 			<TouchableOpacity
 				onPress={() => {
-					props.navigation.navigate("ProductDetail", { item: props.item });
+					props.navigation.navigate("ProductDetail", { item: props.item.id });
 				}}
 				activeOpacity={0.8}
 			>

@@ -1,9 +1,11 @@
 import {
 	Alert,
+	Keyboard,
 	StyleSheet,
 	Text,
 	TextInput,
 	TouchableOpacity,
+	TouchableWithoutFeedback,
 	View,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -18,6 +20,7 @@ const LoginScreen = (props: any) => {
 	const { userInfo, userToken } = useContext(RootContext);
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
+	const [hidePass, setHidePass] = useState(true);
 	const [password, setPassword] = useState("");
 	console.log(userInfo);
 	console.log(userToken);
@@ -64,56 +67,72 @@ const LoginScreen = (props: any) => {
 	// 	}
 	// };
 	return (
-		<View style={{ flex: 1 }}>
-			<View style={{ height: insets.top }} />
-			<View style={{ flex: 4 }}>
-				<TouchableOpacity
-					style={styles.backArrow}
-					onPress={() => {
-						props.navigation.navigate("Welcome");
-					}}
-				>
-					<Ionicons name='arrow-back-circle' size={40} color='black' />
-				</TouchableOpacity>
-
-				<View style={{ marginTop: 30 }}>
-					<Text style={styles.loginTextPlace}>Log in</Text>
-				</View>
-
-				<View style={{ flex: 1, marginHorizontal: 40 }}>
-					<TextInput
-						style={styles.emailBox}
-						value={email}
-						onChangeText={setEmail}
-						placeholder='EMAIL'
-						autoCapitalize='none'
-						autoCorrect={false}
-						textContentType='emailAddress'
-						placeholderTextColor='#707070'
-						keyboardType='email-address'
-					/>
-					<TextInput
-						style={styles.passwordBox}
-						value={password}
-						onChangeText={setPassword}
-						placeholder='PASSWORD'
-						autoCapitalize='none'
-						autoCorrect={false}
-						textContentType='password'
-						placeholderTextColor='#707070'
-						secureTextEntry={true}
-					/>
-
-					<TouchableOpacity style={styles.forgotBox} onPress={() => {}}>
-						<Text style={styles.forgotText}>Forgot your password?</Text>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<View style={{ flex: 1 }}>
+				<View style={{ height: insets.top }} />
+				<View style={{ flex: 4 }}>
+					<TouchableOpacity
+						style={styles.backArrow}
+						onPress={() => {
+							props.navigation.navigate("Welcome");
+						}}
+					>
+						<Ionicons name='arrow-back-circle' size={40} color='black' />
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginBox} onPress={() => loginFunc()}>
-						<Text style={styles.loginText}>LOGIN</Text>
-					</TouchableOpacity>
+
+					<View style={{ marginTop: 30 }}>
+						<Text style={styles.loginTextPlace}>Log in</Text>
+					</View>
+
+					<View style={{ flex: 1, marginHorizontal: 40 }}>
+						<TextInput
+							style={styles.emailBox}
+							value={email}
+							onChangeText={setEmail}
+							placeholder='EMAIL'
+							autoCapitalize='none'
+							autoFocus={true}
+							autoCorrect={false}
+							textContentType='emailAddress'
+							placeholderTextColor='#707070'
+							keyboardType='email-address'
+						/>
+
+						<View
+							style={{
+								flexDirection: "row",
+								borderBottomWidth: 1,
+								paddingBottom: 16,
+								justifyContent: "space-between",
+								marginTop: 24,
+							}}
+						>
+							<TextInput
+								style={styles.passwordStyle}
+								value={password}
+								onChangeText={setPassword}
+								placeholder='PASSWORD'
+								autoCapitalize='none'
+								autoCorrect={false}
+								textContentType='password'
+								placeholderTextColor='#707070'
+								secureTextEntry={hidePass ? true : false}
+							/>
+							<TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+								<Ionicons name={hidePass ? "eye-off" : "eye"} size={24} color='#000' />
+							</TouchableOpacity>
+						</View>
+						<TouchableOpacity style={styles.forgotBox} onPress={() => {}}>
+							<Text style={styles.forgotText}>Forgot your password?</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.loginBox} onPress={() => loginFunc()}>
+							<Text style={styles.loginText}>LOGIN</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
+				<View style={{ flex: 2 }} />
 			</View>
-			<View style={{ flex: 2 }} />
-		</View>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -127,6 +146,12 @@ const styles = StyleSheet.create({
 		paddingBottom: 16,
 		fontSize: 16,
 		marginTop: 32,
+	},
+	passwordStyle: {
+		fontFamily: "SourceSansPro_400Regular",
+		borderBottomColor: "#707070",
+
+		fontSize: 16,
 	},
 	passwordBox: {
 		fontFamily: "SourceSansPro_400Regular",
