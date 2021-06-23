@@ -26,7 +26,7 @@ const RootState = () => {
 
 	useEffect(() => {
 		getUserDataFromLocalStorage();
-	}, []);
+	}, [state]);
 
 	return (
 		<RootContextProvider

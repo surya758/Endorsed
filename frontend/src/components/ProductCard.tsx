@@ -10,8 +10,9 @@ type PropType = {
 		id: string;
 		imageURL: string;
 		title: String;
-		description: String;
 		manufacturer: String;
+		views: number;
+		rating: number;
 	};
 };
 
@@ -34,7 +35,7 @@ const ProductCard = (props: PropType) => {
 		>
 			<TouchableOpacity
 				onPress={() => {
-					props.navigation.navigate("ProductDetail", { item: props.item.id });
+					props.navigation.navigate("ProductDetail", { productId: props.item.id });
 				}}
 				activeOpacity={0.8}
 			>
@@ -48,7 +49,8 @@ const ProductCard = (props: PropType) => {
 					<View style={{ justifyContent: "space-evenly", marginLeft: 15 }}>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>{props.item.title}</Text>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 14 }}>
-							{/* {props.item.manufacturer} */} Google
+							{props.item.manufacturer}
+							{/* Google */}
 						</Text>
 						<View style={styles.category}>
 							<Text style={{ fontFamily: "Lato_400Regular", fontSize: 10 }}>
@@ -73,9 +75,15 @@ const ProductCard = (props: PropType) => {
 						<View style={styles.ratingAndViewsBox}>
 							<Ionicons name='star' size={14} color='grey' />
 
-							<Text style={styles.rating}>{/* {props.item.rating} */} 2.9</Text>
+							<Text style={styles.rating}>
+								{props.item.rating}
+								{/* 2.9 */}
+							</Text>
 							<AntDesign name='eye' size={14} color='grey' />
-							<Text style={styles.views}>{/* {props.item.upvotes} */} 1500</Text>
+							<Text style={styles.views}>
+								{props.item.views}
+								{/* 1500 */}
+							</Text>
 						</View>
 					</View>
 				</View>

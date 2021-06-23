@@ -33,7 +33,7 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     rating: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
       min: 1,
       max: 10,
@@ -49,6 +49,12 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
     resolution: {
+      type: String,
+    },
+    dimensions: {
+      type: String,
+    },
+    colors: {
       type: String,
     },
   },

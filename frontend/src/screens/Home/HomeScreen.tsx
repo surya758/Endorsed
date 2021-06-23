@@ -4,12 +4,23 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Endorsed from "../../assets/icons/Endorsed";
 import { Ionicons } from "@expo/vector-icons";
 import ProductCard from "../../components/ProductCard";
-import ProductContext from "../../context/ProductContext";
+import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useStore } from "../../context/RootContext";
 
 const windowWidth = Dimensions.get("window").width;
 
+type productType = {
+	title: string;
+	manufacturer: string;
+	views: number;
+	rating: number;
+	imageURL: string;
+	id: string;
+};
+
 const HomeScreen = ({ navigation }) => {
+	const { userData } = useStore();
 	const insets = useSafeAreaInsets();
 	const scrollY = new Animated.Value(0);
 	const HEADER_HEIGHT = 50;
@@ -19,23 +30,29 @@ const HomeScreen = ({ navigation }) => {
 		outputRange: [0, -HEADER_HEIGHT],
 		extrapolate: "clamp",
 	});
-	const product = useContext(ProductContext);
-	// const [headerHeight, setHeaderHeight] = useState < number > 50;
-	// const [testFlatData, setTestFlatData] =
-	// 	useState<Array<productType>>(testFlatData0);
-	// const getProductFunc = async () => {
-	// 	try {
-	// 		await axios.get("http://10.0.2.2:3000/v1/products").then((res) => {
-	// 			setTestFlatData(res.data);
-	// 		});
-	// 	} catch (err) {
-	// 		// console.log(err);
-	// 	}
-	// };
+	// const product = useContext(ProductContext);
+	const [testFlatData, setTestFlatData] = useState<Array<productType>>([
+		{ title: "", manufacturer: "", views: 0, rating: 0, imageURL: "", id: "" },
+	]);
+	const getProductFunc = async () => {
+		try {
+			await axios
+				.get("http://10.0.2.2:3000/v1/products?fields=title,manufacturer,rating,views,imageURL", {
+					headers: {
+						Authorization: "Bearer " + userData.tokens.access.token,
+					},
+				})
+				.then((res) => {
+					setTestFlatData(res.data.results);
+				});
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-	// useEffect(() => {
-	// 	getProductFunc();
-	// }, []);
+	useEffect(() => {
+		getProductFunc();
+	}, [navigation]);
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -68,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
 				onScroll={(e) => {
 					scrollY.setValue(e.nativeEvent.contentOffset.y);
 				}}
-				data={product}
+				data={testFlatData}
 				keyExtractor={(product) => product.id.toString()}
 				renderItem={({ item }) => {
 					return <ProductCard item={item} navigation={navigation} />;
@@ -79,7 +96,6 @@ const HomeScreen = ({ navigation }) => {
 					return <View style={{ height: 10 }} />;
 				}}
 				contentContainerStyle={{
-					// padding: 5,
 					paddingTop: 5,
 				}}
 				ListFooterComponent={<View style={{ height: 60 }} />}

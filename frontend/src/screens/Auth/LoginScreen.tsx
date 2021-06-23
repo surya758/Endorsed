@@ -15,21 +15,22 @@ import { Ionicons } from "@expo/vector-icons";
 import RootContext from "../../context/RootContext";
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useStore } from "../../context/RootContext";
 
 const LoginScreen = (props: any) => {
-	const { userInfo, userToken } = useContext(RootContext);
+	// const { userInfo, userToken, setState } = useContext(RootContext);
+	const { setState } = useStore();
+
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
 	const [hidePass, setHidePass] = useState(true);
 	const [password, setPassword] = useState("");
-	console.log(userInfo);
-	console.log(userToken);
 	const storeData = async (value: valueType) => {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem("accessUserCred", jsonValue);
 		} catch (e) {
-			// saving error
+			console.error(e);
 		}
 	};
 	const loginFunc = async () => {
@@ -40,7 +41,7 @@ const LoginScreen = (props: any) => {
 					password: password,
 				})
 				.then((res) => storeData(res.data));
-			props.navigation.navigate("CoreNav");
+			setState("refresh");
 		} catch (error) {
 			Alert.alert("Unauthorised!", "Incorrect email or password!", [
 				{ text: "Okay", onPress: () => console.log("Okay Pressed") },
@@ -49,23 +50,6 @@ const LoginScreen = (props: any) => {
 		}
 	};
 
-	// const getCurrentUser = async () => {
-	// 	try {
-	// 		await Auth.currentAuthenticatedUser().then((res) => {
-	// 			console.log({ res });
-	// 		});
-	// 	} catch (error) {
-	// 		console.error({ error });
-	// 	}
-	// };
-
-	// const signOutFunc = async () => {
-	// 	try {
-	// 		await Auth.signOut();
-	// 	} catch (error) {
-	// 		console.log({ error });
-	// 	}
-	// };
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View style={{ flex: 1 }}>
