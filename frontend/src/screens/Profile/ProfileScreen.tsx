@@ -1,4 +1,12 @@
-import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	Dimensions,
+	Image,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React, { useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,18 +46,60 @@ const ProfileScreen = () => {
 			<View style={styles.headerBox}>
 				<Text style={styles.headerText}>PROFILE</Text>
 			</View>
-			<View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+
+			<View
+				style={{
+					flex: 1,
+					backgroundColor: "#191970",
+					justifyContent: "space-evenly",
+					paddingHorizontal: 15,
+				}}
+			>
 				<TouchableOpacity
 					style={{
-						backgroundColor: "#191970",
-						width: 0.8 * windowWidth,
-						alignItems: "center",
-						borderRadius: 5,
+						alignSelf: "flex-end",
 					}}
-					onPress={signOutFunc}
 				>
-					<Text style={{ padding: 15, color: "#fff" }}>Sign Out</Text>
+					<Ionicons name='settings-outline' size={24} color='white' />
 				</TouchableOpacity>
+				<View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+					<Image
+						source={require("../../assets/images/ob1.jpg")}
+						style={{ width: 50, height: 50, borderRadius: 25 }}
+					/>
+					<View style={{ marginLeft: 15 }}>
+						<Text
+							style={{
+								color: "white",
+								fontFamily: "SourceSansPro_700Bold",
+								fontSize: 16,
+								paddingVertical: 2,
+							}}
+						>
+							SURYA KANT
+						</Text>
+						<TouchableOpacity>
+							<Text style={{ color: "#35c949", fontFamily: "Lato_400Regular", fontSize: 12 }}>
+								Edit Profile
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</View>
+			<View style={{ flex: 4 }}>
+				<View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+					<TouchableOpacity
+						style={{
+							backgroundColor: "#191970",
+							width: 0.8 * windowWidth,
+							alignItems: "center",
+							borderRadius: 5,
+						}}
+						onPress={signOutFunc}
+					>
+						<Text style={{ padding: 15, color: "#fff" }}>Sign Out</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 		</>
 	);

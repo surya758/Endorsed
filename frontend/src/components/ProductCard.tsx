@@ -1,8 +1,9 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 
 type PropType = {
@@ -45,6 +46,7 @@ const ProductCard = (props: PropType) => {
 							uri: props.item.imageURL,
 						}}
 						style={styles.image}
+						PlaceholderContent={<ActivityIndicator />}
 					/>
 					<View style={{ justifyContent: "space-evenly", marginLeft: 15 }}>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>{props.item.title}</Text>

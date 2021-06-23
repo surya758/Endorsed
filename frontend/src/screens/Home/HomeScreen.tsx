@@ -5,6 +5,7 @@ import Endorsed from "../../assets/icons/Endorsed";
 import { Ionicons } from "@expo/vector-icons";
 import ProductCard from "../../components/ProductCard";
 import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useStore } from "../../context/RootContext";
 
@@ -20,6 +21,8 @@ type productType = {
 };
 
 const HomeScreen = ({ navigation }) => {
+	const isFocused = useIsFocused();
+
 	const { userData } = useStore();
 	const insets = useSafeAreaInsets();
 	const scrollY = new Animated.Value(0);
@@ -52,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
 
 	useEffect(() => {
 		getProductFunc();
-	}, [navigation]);
+	}, [isFocused]);
 
 	return (
 		<View style={{ flex: 1 }}>

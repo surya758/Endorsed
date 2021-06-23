@@ -1,20 +1,27 @@
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+	Dimensions,
+	Image,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
 import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useStore } from "../../context/RootContext";
 
 const ProductDetailScreen = ({ route, navigation }) => {
+	const isFocused = useIsFocused();
 	const { userData } = useStore();
 	const insets = useSafeAreaInsets();
 	const windowWidth = Dimensions.get("window").width;
 	const currentProductId = route.params.productId;
-	console.log(currentProductId);
-
 	const [productFullData, setProductFullData] = useState({});
 	const getProductFunc = async () => {
 		try {
@@ -26,30 +33,61 @@ const ProductDetailScreen = ({ route, navigation }) => {
 				})
 				.then((res) => {
 					setProductFullData(res.data);
-				})
-				.then(() => updateViewsFunc(productFullData.views));
+					manageViewsFunc(res.data.views);
+				});
 		} catch (err) {
 			// console.log(err);
 		}
 	};
 
-	const updateViewsFunc = async (views) => {
+	const manageViewsFunc = async (views) => {
 		try {
-			await axios.patch(`http://10.0.2.2:3000/v1/products/${currentProductId}`, {
-				headers: {
-					Authorization: "Bearer " + userData.tokens.access.token,
-				},
-				views: views + 1,
-			});
+			await axios
+				.patch(
+					`http://10.0.2.2:3000/v1/products/${currentProductId}`,
+					{
+						views: views + 1,
+					},
+					{
+						headers: {
+							Authorization: "Bearer " + userData.tokens.access.token,
+						},
+					}
+				)
+				.then((res) => {
+					setProductFullData(res.data);
+				});
+		} catch (err) {}
+	};
+
+	const manageUpvoteFunc = async (upvotes) => {
+		try {
+			await axios
+				.patch(
+					`http://10.0.2.2:3000/v1/products/${currentProductId}`,
+					{
+						upvotes: upvotes + 1,
+					},
+					{
+						headers: {
+							Authorization: "Bearer " + userData.tokens.access.token,
+						},
+					}
+				)
+				.then((res) => {
+					setProductFullData(res.data);
+				});
 		} catch (err) {}
 	};
 
 	useEffect(() => {
 		getProductFunc();
-	}, [navigation]);
+	}, []);
 
 	return (
-		<>
+		<View style={{ flex: 1 }}>
+			<View style={{ height: insets.top, backgroundColor: "red" }} />
+
 			{/* <View
 				style={{
 					width: 0.8 * windowWidth,
@@ -67,7 +105,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
 					borderRadius: 30,
 				}}
 			/> */}
-			<View style={{ height: insets.top, backgroundColor: "red" }} />
 			<View style={{ flex: 1 }}>
 				<View
 					style={{
@@ -128,12 +165,15 @@ const ProductDetailScreen = ({ route, navigation }) => {
 						</View>
 						<View style={{ flexDirection: "row", marginTop: 20, alignItems: "center" }}>
 							<View style={{ flexDirection: "row" }}>
-								<MaterialIcons
-									name='thumb-up'
-									size={24}
-									color='#a09a9a'
-									style={{ marginRight: 16 }}
-								/>
+								<TouchableOpacity onPress={() => manageUpvoteFunc(productFullData.upvotes)}>
+									<MaterialIcons
+										name='thumb-up'
+										size={24}
+										color='#a09a9a'
+										style={{ marginRight: 16 }}
+									/>
+								</TouchableOpacity>
+
 								<MaterialIcons name='thumb-down' size={24} color='#a09a9a' />
 							</View>
 							{/* <View style={styles.editButton}>
@@ -221,9 +261,16 @@ const ProductDetailScreen = ({ route, navigation }) => {
 						</View>
 					</View>
 					<View style={styles.line} />
+					<View>
+						<Text style={styles.subHeadingTextStyle}>Specification </Text>
+						<View>
+							<Text>Ram</Text>
+						</View>
+					</View>
+					<View style={styles.line} />
 				</View>
 			</View>
-		</>
+		</View>
 	);
 };
 
