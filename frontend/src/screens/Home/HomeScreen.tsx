@@ -1,4 +1,12 @@
-import { Animated, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+	Animated,
+	Dimensions,
+	FlatList,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import Endorsed from "../../assets/icons/Endorsed";
@@ -78,7 +86,9 @@ const HomeScreen = ({ navigation }) => {
 			>
 				<Endorsed />
 				<Text style={styles.headerText}>ENDORSED</Text>
-				<Ionicons name='bookmarks' size={24} color='black' />
+				<TouchableOpacity onPress={() => navigation.navigate("Bookmark")}>
+					<Ionicons name='bookmarks' size={24} color='black' />
+				</TouchableOpacity>
 			</Animated.View>
 
 			<FlatList

@@ -2,6 +2,7 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "rea
 import React, { useEffect, useState } from "react";
 
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
 import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,6 +19,26 @@ type PropType = {
 };
 
 const ProductCard = (props: PropType) => {
+	const saveBookMark = async (productId) => {
+		const bookmarkStr = await AsyncStorage.getItem("bookmark");
+		const bookmark = JSON.parse(bookmarkStr);
+		const bookMarkData = [];
+
+		console.log({ bookmark });
+		if (bookmark) {
+			bookMarkData.push(...bookmark);
+		}
+		try {
+			if (bookMarkData.indexOf(productId) === -1) {
+				bookMarkData.push(productId);
+				await AsyncStorage.setItem("bookmark", JSON.stringify(bookMarkData));
+				console.log({ bookMarkData });
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	return (
 		<View
 			style={{
@@ -69,6 +90,7 @@ const ProductCard = (props: PropType) => {
 									flexDirection: "row",
 									paddingLeft: 20,
 								}}
+								onPress={() => saveBookMark(props.item.id)}
 							>
 								<AntDesign name='pluscircle' size={15} color='#191970' />
 								<Text style={styles.saveText}>SAVE</Text>

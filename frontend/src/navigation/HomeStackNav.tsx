@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import BookmarkScreen from "../screens/Home/BookmarkScreen";
 import HomeScreen from "../screens/Home/HomeScreen";
 import ProductDetailScreen from "../screens/Home/ProductDetailScreen";
 import ProductEditScreen from "../screens/Home/ProductEditScreen";
@@ -28,6 +29,13 @@ const HomeStackNav = () => {
 			<HomeStack.Screen
 				name='ProductEdit'
 				component={ProductEditScreen}
+				options={{
+					headerShown: false,
+				}}
+			/>
+			<HomeStack.Screen
+				name='Bookmark'
+				component={BookmarkScreen}
 				options={{
 					headerShown: false,
 				}}

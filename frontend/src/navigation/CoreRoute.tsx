@@ -37,7 +37,7 @@ const CoreRoute = () => {
 							break;
 					}
 
-					return <Ionicons name={iconName} color='#191970' size={28} />;
+					return <Ionicons name={iconName} color='#e60026' size={28} />;
 				},
 			})}
 		>
