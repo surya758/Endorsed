@@ -24,7 +24,6 @@ const ProductCard = (props: PropType) => {
 		const bookmark = JSON.parse(bookmarkStr);
 		const bookMarkData = [];
 
-		console.log({ bookmark });
 		if (bookmark) {
 			bookMarkData.push(...bookmark);
 		}
@@ -32,7 +31,6 @@ const ProductCard = (props: PropType) => {
 			if (bookMarkData.indexOf(productId) === -1) {
 				bookMarkData.push(productId);
 				await AsyncStorage.setItem("bookmark", JSON.stringify(bookMarkData));
-				console.log({ bookMarkData });
 			}
 		} catch (e) {
 			console.error(e);
@@ -40,21 +38,7 @@ const ProductCard = (props: PropType) => {
 	};
 
 	return (
-		<View
-			style={{
-				flex: 1,
-				elevation: 10,
-				shadowRadius: 5,
-				shadowOpacity: 0.1,
-				shadowColor: "#000",
-				shadowOffset: { height: 0, width: 0 },
-				flexDirection: "row",
-				alignItems: "center",
-				backgroundColor: "#fff",
-				borderRadius: 5,
-				marginHorizontal: 5,
-			}}
-		>
+		<View style={styles.container}>
 			<TouchableOpacity
 				onPress={() => {
 					props.navigation.navigate("ProductDetail", { productId: props.item.id });
@@ -70,10 +54,11 @@ const ProductCard = (props: PropType) => {
 						PlaceholderContent={<ActivityIndicator />}
 					/>
 					<View style={{ justifyContent: "space-evenly", marginLeft: 15 }}>
-						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>{props.item.title}</Text>
+						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 16 }}>
+							{props.item.title.toUpperCase()}
+						</Text>
 						<Text style={{ fontFamily: "Lato_400Regular", fontSize: 14 }}>
 							{props.item.manufacturer}
-							{/* Google */}
 						</Text>
 						<View style={styles.category}>
 							<Text style={{ fontFamily: "Lato_400Regular", fontSize: 10 }}>
@@ -99,15 +84,9 @@ const ProductCard = (props: PropType) => {
 						<View style={styles.ratingAndViewsBox}>
 							<Ionicons name='star' size={14} color='grey' />
 
-							<Text style={styles.rating}>
-								{props.item.rating}
-								{/* 2.9 */}
-							</Text>
+							<Text style={styles.rating}>{props.item.rating}</Text>
 							<AntDesign name='eye' size={14} color='grey' />
-							<Text style={styles.views}>
-								{props.item.views}
-								{/* 1500 */}
-							</Text>
+							<Text style={styles.views}>{props.item.views}</Text>
 						</View>
 					</View>
 				</View>
@@ -119,6 +98,19 @@ const ProductCard = (props: PropType) => {
 export default ProductCard;
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		elevation: 10,
+		shadowRadius: 5,
+		shadowOpacity: 0.1,
+		shadowColor: "#000",
+		shadowOffset: { height: 0, width: 0 },
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: "#fff",
+		borderRadius: 5,
+		marginHorizontal: 5,
+	},
 	image: {
 		width: 80,
 		height: 100,

@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import HomeScreen from "../screens/Home/HomeScreen";
 import HomeStackNav from "./HomeStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import NotificationScreen from "../screens/Notification/NotificationScreen";
-import ProfileScreen from "../screens/Profile/ProfileScreen";
+import ProfileStackNav from "./ProfileStack";
 import React from "react";
 import SearchScreen from "../screens/Search/SearchScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -44,7 +43,7 @@ const CoreRoute = () => {
 			<Tab.Screen name='Home' component={HomeStackNav} />
 			<Tab.Screen name='Search' component={SearchScreen} />
 			<Tab.Screen name='Notification' component={NotificationScreen} />
-			<Tab.Screen name='Profile' component={ProfileScreen} />
+			<Tab.Screen name='Profile' component={ProfileStackNav} />
 		</Tab.Navigator>
 	);
 };

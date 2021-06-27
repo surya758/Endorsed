@@ -13,8 +13,15 @@ const getProduct = catchAsync(async (req, res) => {
   const product = await productService.getProductById(req.params.productId);
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, 'product not found');
+  } else {
+    if (req.query.field) {
+      console.log(req.query.field);
+      const { imageURL, title } = product;
+      res.send({ imageURL, title });
+    } else {
+      res.send(product);
+    }
   }
-  res.send(product);
 });
 
 const getProducts = catchAsync(async (req, res) => {
@@ -32,9 +39,6 @@ const deleteProduct = catchAsync(async (req, res) => {
 
 const updateProduct = catchAsync(async (req, res) => {
   console.log(req.params.productId);
-  console.log('====================================');
-  console.log(req.body);
-  console.log('====================================');
   const product = await productService.updateProductById(req.params.productId, req.body);
   res.send(product);
 });

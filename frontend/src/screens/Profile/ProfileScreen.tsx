@@ -15,7 +15,7 @@ import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useStore } from "../../context/RootContext";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
 	const windowWidth = Dimensions.get("window").width;
 	const insets = useSafeAreaInsets();
 	const { setState, userData } = useStore();
@@ -76,9 +76,9 @@ const ProfileScreen = () => {
 								paddingVertical: 2,
 							}}
 						>
-							SURYA KANT
+							{userData.user.name.toUpperCase()}
 						</Text>
-						<TouchableOpacity>
+						<TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
 							<Text style={{ color: "#35c949", fontFamily: "Lato_400Regular", fontSize: 12 }}>
 								Edit Profile
 							</Text>

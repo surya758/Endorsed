@@ -21,22 +21,16 @@ const BookmarkScreen = ({ navigation }) => {
 		try {
 			bookmark.forEach(async function (item, index) {
 				await axios
-					.get(`http://10.0.2.2:3000/v1/products/${item}`, {
+					.get(`http://10.0.2.2:3000/v1/products/${item}?field=imageURL,title`, {
 						headers: {
 							Authorization: "Bearer " + userData.tokens.access.token,
 						},
 					})
 					.then((res) => bookmarkArr.push(res.data));
+				if (componentMounted) {
+					setBookMarkDataFromDB(bookmarkArr);
+				}
 			});
-			if (componentMounted) {
-				console.log("====================================");
-				console.log(bookmarkArr);
-				console.log("====================================");
-				setBookMarkDataFromDB(bookmarkArr);
-			}
-			console.log("====================================");
-			console.log({ bookMarkDataFromDB });
-			console.log("====================================");
 		} catch (error) {
 			console.log(error);
 		}

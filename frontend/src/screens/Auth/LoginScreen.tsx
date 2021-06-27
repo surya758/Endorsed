@@ -13,18 +13,24 @@ import React, { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import RootContext from "../../context/RootContext";
+import { TouchableRipple } from "react-native-paper";
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useStore } from "../../context/RootContext";
 
 const LoginScreen = (props: any) => {
-	// const { userInfo, userToken, setState } = useContext(RootContext);
 	const { setState } = useStore();
 
 	const insets = useSafeAreaInsets();
 	const [email, setEmail] = useState("");
 	const [hidePass, setHidePass] = useState(true);
 	const [password, setPassword] = useState("");
+	const [isEmailValid, setIsEmailValid] = useState(true);
+
+	const emailIsValid = (email) => {
+		return setIsEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+	};
+
 	const storeData = async (value: valueType) => {
 		try {
 			const jsonValue = JSON.stringify(value);
@@ -43,10 +49,10 @@ const LoginScreen = (props: any) => {
 				.then((res) => storeData(res.data));
 			setState("refresh");
 		} catch (error) {
-			Alert.alert("Unauthorised!", "Incorrect email or password!", [
+			Alert.alert("Invalid User!", "Incorrect email or password.", [
 				{ text: "Okay", onPress: () => console.log("Okay Pressed") },
 			]);
-			console.error({ error });
+			console.log({ error });
 		}
 	};
 
@@ -71,16 +77,18 @@ const LoginScreen = (props: any) => {
 					<View style={{ flex: 1, marginHorizontal: 40 }}>
 						<TextInput
 							style={styles.emailBox}
-							value={email}
+							value={email.trimStart().trimLeft()}
 							onChangeText={setEmail}
 							placeholder='EMAIL'
 							autoCapitalize='none'
-							autoFocus={true}
 							autoCorrect={false}
 							textContentType='emailAddress'
 							placeholderTextColor='#707070'
 							keyboardType='email-address'
+							onEndEditing={(e) => emailIsValid(e.nativeEvent.text)}
 						/>
+
+						{isEmailValid ? null : <Text style={styles.errMsg}>Please provide a valid email.</Text>}
 
 						<View
 							style={{
@@ -93,7 +101,7 @@ const LoginScreen = (props: any) => {
 						>
 							<TextInput
 								style={styles.passwordStyle}
-								value={password}
+								value={password.trim()}
 								onChangeText={setPassword}
 								placeholder='PASSWORD'
 								autoCapitalize='none'
@@ -106,6 +114,7 @@ const LoginScreen = (props: any) => {
 								<Ionicons name={hidePass ? "eye-off" : "eye"} size={24} color='#000' />
 							</TouchableOpacity>
 						</View>
+
 						<TouchableOpacity style={styles.forgotBox} onPress={() => {}}>
 							<Text style={styles.forgotText}>Forgot your password?</Text>
 						</TouchableOpacity>
@@ -125,7 +134,6 @@ export default LoginScreen;
 const styles = StyleSheet.create({
 	emailBox: {
 		fontFamily: "SourceSansPro_400Regular",
-		borderBottomColor: "#707070",
 		borderBottomWidth: 1,
 		paddingBottom: 16,
 		fontSize: 16,
@@ -133,13 +141,10 @@ const styles = StyleSheet.create({
 	},
 	passwordStyle: {
 		fontFamily: "SourceSansPro_400Regular",
-		borderBottomColor: "#707070",
-
 		fontSize: 16,
 	},
 	passwordBox: {
 		fontFamily: "SourceSansPro_400Regular",
-		borderBottomColor: "#707070",
 		borderBottomWidth: 1,
 		paddingBottom: 16,
 		fontSize: 16,
@@ -149,6 +154,7 @@ const styles = StyleSheet.create({
 		fontFamily: "SourceSansPro_400Regular",
 		fontSize: 16,
 		marginTop: 24,
+		color: "#000",
 	},
 	forgotBox: {
 		alignItems: "center",
@@ -176,5 +182,11 @@ const styles = StyleSheet.create({
 		marginLeft: 40,
 		marginTop: 50,
 		alignSelf: "flex-start",
+	},
+	errMsg: {
+		color: "red",
+		fontFamily: "SourceSansPro_400Regular",
+		fontSize: 14,
+		marginTop: 5,
 	},
 });

@@ -2,6 +2,8 @@ import {
 	Animated,
 	Dimensions,
 	FlatList,
+	SafeAreaView,
+	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -11,6 +13,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import Endorsed from "../../assets/icons/Endorsed";
 import { Ionicons } from "@expo/vector-icons";
+import MainSkeleton from "../../components/MainSkeleton";
 import ProductCard from "../../components/ProductCard";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
@@ -30,7 +33,7 @@ type productType = {
 
 const HomeScreen = ({ navigation }) => {
 	const isFocused = useIsFocused();
-
+	const [loading, setLoading] = useState(true);
 	const { userData } = useStore();
 	const insets = useSafeAreaInsets();
 	const scrollY = new Animated.Value(0);
@@ -41,7 +44,6 @@ const HomeScreen = ({ navigation }) => {
 		outputRange: [0, -HEADER_HEIGHT],
 		extrapolate: "clamp",
 	});
-	// const product = useContext(ProductContext);
 	const [testFlatData, setTestFlatData] = useState<Array<productType>>([
 		{ title: "", manufacturer: "", views: 0, rating: 0, imageURL: "", id: "" },
 	]);
@@ -56,6 +58,9 @@ const HomeScreen = ({ navigation }) => {
 				.then((res) => {
 					setTestFlatData(res.data.results);
 				});
+			if (loading) {
+				setLoading(false);
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -90,29 +95,34 @@ const HomeScreen = ({ navigation }) => {
 					<Ionicons name='bookmarks' size={24} color='black' />
 				</TouchableOpacity>
 			</Animated.View>
-
-			<FlatList
-				scrollEventThrottle={16}
-				style={{ paddingTop: HEADER_HEIGHT }}
-				bounces={false}
-				onScroll={(e) => {
-					scrollY.setValue(e.nativeEvent.contentOffset.y);
-				}}
-				data={testFlatData}
-				keyExtractor={(product) => product.id.toString()}
-				renderItem={({ item }) => {
-					return <ProductCard item={item} navigation={navigation} />;
-				}}
-				showsHorizontalScrollIndicator={false}
-				showsVerticalScrollIndicator={true}
-				ItemSeparatorComponent={() => {
-					return <View style={{ height: 10 }} />;
-				}}
-				contentContainerStyle={{
-					paddingTop: 5,
-				}}
-				ListFooterComponent={<View style={{ height: 60 }} />}
-			/>
+			{loading ? (
+				<View style={{ top: 50 }}>
+					<MainSkeleton numberOfPlaceHolders={7} />
+				</View>
+			) : (
+				<FlatList
+					scrollEventThrottle={16}
+					style={{ paddingTop: HEADER_HEIGHT }}
+					bounces={false}
+					onScroll={(e) => {
+						scrollY.setValue(e.nativeEvent.contentOffset.y);
+					}}
+					data={testFlatData}
+					keyExtractor={(product) => product.id.toString()}
+					renderItem={({ item }) => {
+						return <ProductCard item={item} navigation={navigation} />;
+					}}
+					showsHorizontalScrollIndicator={false}
+					showsVerticalScrollIndicator={true}
+					ItemSeparatorComponent={() => {
+						return <View style={{ height: 10 }} />;
+					}}
+					contentContainerStyle={{
+						paddingTop: 5,
+					}}
+					ListFooterComponent={<View style={{ height: 60 }} />}
+				/>
+			)}
 		</View>
 	);
 };

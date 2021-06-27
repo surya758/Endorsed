@@ -17,6 +17,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const RegisterScreen = (props: any) => {
 	const [hidePass, setHidePass] = useState(true);
+	const [isEmailValid, setIsEmailValid] = useState(true);
+	const [isPasswordValid, setIsPasswordValid] = useState(true);
+	const insets = useSafeAreaInsets();
+	const [userFullName, setUserFullName] = useState("");
+	const [userEmail, setUserEmail] = useState("");
+	const [userPassword, setUserPassword] = useState("");
+
+	const emailIsValid = (email) => {
+		return setIsEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()));
+	};
+
+	const passwordIsValid = (password) => {
+		return setIsPasswordValid(
+			/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/.test(password.trim())
+		);
+	};
 	const storeData = async (value: valueType) => {
 		try {
 			const jsonValue = JSON.stringify(value);
@@ -35,7 +51,6 @@ const RegisterScreen = (props: any) => {
 					name: userFullName,
 				})
 				.then((res) => storeData(res.data));
-			console.log("this is working");
 			props.navigation.navigate("Core", { screen: "Home" });
 		} catch (err) {
 			Alert.alert("Uh oh...", `${err}`, [
@@ -44,10 +59,6 @@ const RegisterScreen = (props: any) => {
 			console.log({ err });
 		}
 	};
-	const insets = useSafeAreaInsets();
-	const [userFullName, setUserFullName] = useState("");
-	const [userEmail, setUserEmail] = useState("");
-	const [userPassword, setUserPassword] = useState("");
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -74,7 +85,7 @@ const RegisterScreen = (props: any) => {
 					>
 						<TextInput
 							style={styles.nameStyle}
-							value={userFullName}
+							value={userFullName.trimStart().trimLeft()}
 							onChangeText={setUserFullName}
 							placeholder='FULL NAME'
 							autoCapitalize='none'
@@ -84,7 +95,7 @@ const RegisterScreen = (props: any) => {
 						/>
 						<TextInput
 							style={styles.emailStyle}
-							value={userEmail}
+							value={userEmail.trimStart().trimLeft()}
 							onChangeText={setUserEmail}
 							placeholder='EMAIL'
 							autoCapitalize='none'
@@ -92,18 +103,22 @@ const RegisterScreen = (props: any) => {
 							textContentType='emailAddress'
 							placeholderTextColor='#707070'
 							keyboardType='email-address'
+							onEndEditing={(e) => emailIsValid(e.nativeEvent.text)}
 						/>
+						{isEmailValid ? null : <Text style={styles.errMsg}>Please provide a valid email.</Text>}
+
 						<View
 							style={{
 								flexDirection: "row",
 								borderBottomWidth: 1,
 								paddingBottom: 16,
 								justifyContent: "space-between",
+								alignItems: "flex-end",
 							}}
 						>
 							<TextInput
 								style={styles.passwordStyle}
-								value={userPassword}
+								value={userPassword.trim()}
 								onChangeText={setUserPassword}
 								placeholder='PASSWORD'
 								autoCapitalize='none'
@@ -111,28 +126,17 @@ const RegisterScreen = (props: any) => {
 								textContentType='password'
 								placeholderTextColor='#707070'
 								secureTextEntry={hidePass ? true : false}
+								onEndEditing={(e) => passwordIsValid(e.nativeEvent.text)}
 							/>
 							<TouchableOpacity onPress={() => setHidePass(!hidePass)}>
 								<Ionicons name={hidePass ? "eye-off" : "eye"} size={24} color='#000' />
 							</TouchableOpacity>
 						</View>
-						{/* <TextInput
-						style={styles.passwordStyle}
-						value={userPassword}
-						onChangeText={setUserPassword}
-						placeholder='PASSWORD'
-						autoCapitalize='none'
-						autoCorrect={false}
-						textContentType='password'
-						placeholderTextColor='#707070'
-						secureTextEntry={hidePass ? true : false}
-					/> */}
-						<View style={{ flexDirection: "row", marginTop: 10 }}>
-							<Ionicons name='checkmark' size={16} color='black' />
-							<Text style={{ fontFamily: "SourceSansPro_300Light", fontSize: 12 }}>
-								Must be 6-8 characters long
+						{isPasswordValid ? null : (
+							<Text style={styles.errMsg}>
+								Password must contain at least one numeric digit and a special character.
 							</Text>
-						</View>
+						)}
 
 						<TouchableOpacity
 							style={{
@@ -147,14 +151,6 @@ const RegisterScreen = (props: any) => {
 						<Text style={styles.createAccountText}>CREATE ACCOUNT</Text>
 					</TouchableOpacity>
 				</View>
-				{/* <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
-				<Ionicons
-					name={hidePass ? "eye-off" : "eye"}
-					size={24}
-					color='#2940C2'
-				/>
-			</TouchableOpacity> */}
-				<View style={{ flex: 2 }}></View>
 			</View>
 		</TouchableWithoutFeedback>
 	);
@@ -179,21 +175,27 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		paddingBottom: 16,
 		fontSize: 16,
-		marginTop: 32,
+		marginTop: 24,
 	},
 	emailStyle: {
 		fontFamily: "SourceSansPro_400Regular",
 		borderBottomColor: "#707070",
 		borderBottomWidth: 1,
 		paddingBottom: 16,
-		marginVertical: 32,
+		marginTop: 24,
 		fontSize: 16,
 	},
 	passwordStyle: {
 		fontFamily: "SourceSansPro_400Regular",
 		borderBottomColor: "#707070",
-
 		fontSize: 16,
+		marginTop: 24,
+	},
+	errMsg: {
+		color: "red",
+		fontFamily: "SourceSansPro_400Regular",
+		fontSize: 14,
+		marginTop: 5,
 	},
 	forgotText: {
 		fontFamily: "SourceSansPro_400Regular",
@@ -204,9 +206,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000000",
 		alignItems: "center",
 		borderRadius: 20,
-
 		marginHorizontal: 60,
-		marginVertical: 50,
+		marginVertical: 32,
 	},
 	createAccountText: {
 		fontFamily: "SourceSansPro_400Regular",
