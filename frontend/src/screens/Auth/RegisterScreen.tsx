@@ -14,8 +14,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useStore } from "../../context/RootContext";
 
 const RegisterScreen = (props: any) => {
+	const { setState } = useStore();
+
 	const [hidePass, setHidePass] = useState(true);
 	const [isEmailValid, setIsEmailValid] = useState(true);
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -45,13 +48,14 @@ const RegisterScreen = (props: any) => {
 	const createUserFunc = async () => {
 		try {
 			await axios
-				.post("http://10.0.2.2:3000/v1/auth/register", {
+				.post("http://13.126.33.1:3000/v1/auth/register", {
 					email: userEmail,
 					password: userPassword,
 					name: userFullName,
 				})
 				.then((res) => storeData(res.data));
-			props.navigation.navigate("Core", { screen: "Home" });
+			setState("refresh");
+			// props.navigation.navigate("Core", { screen: "Home" });
 		} catch (err) {
 			Alert.alert("Uh oh...", `${err}`, [
 				{ text: "Okay", onPress: () => console.log("Okay Pressed") },

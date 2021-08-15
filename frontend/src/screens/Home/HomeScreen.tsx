@@ -50,11 +50,14 @@ const HomeScreen = ({ navigation }) => {
 	const getProductFunc = async () => {
 		try {
 			await axios
-				.get("http://10.0.2.2:3000/v1/products?fields=title,manufacturer,rating,views,imageURL", {
-					headers: {
-						Authorization: "Bearer " + userData.tokens.access.token,
-					},
-				})
+				.get(
+					"http://13.126.33.1:3000/v1/products?fields=title,manufacturer,rating,views,imageURL",
+					{
+						headers: {
+							Authorization: "Bearer " + userData.tokens.access.token,
+						},
+					}
+				)
 				.then((res) => {
 					setTestFlatData(res.data.results);
 				});

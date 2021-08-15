@@ -88,7 +88,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 	const getProductFunc = async () => {
 		try {
 			await axios
-				.get(`http://10.0.2.2:3000/v1/products/${currentProductId}`, {
+				.get(`http://13.126.33.1:3000/v1/products/${currentProductId}`, {
 					headers: {
 						Authorization: "Bearer " + userData.tokens.access.token,
 					},

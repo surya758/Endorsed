@@ -42,7 +42,7 @@ const LoginScreen = (props: any) => {
 	const loginFunc = async () => {
 		try {
 			await axios
-				.post("http://10.0.2.2:3000/v1/auth/login", {
+				.post("http://13.126.33.1:3000/v1/auth/login", {
 					email: email,
 					password: password,
 				})

@@ -29,7 +29,7 @@ const ProfileScreen = ({ navigation }) => {
 	const signOutFunc = async () => {
 		try {
 			await axios
-				.post("http://10.0.2.2:3000/v1/auth/logout", {
+				.post("http://13.126.33.1:3000/v1/auth/logout", {
 					refreshToken: `${userData.tokens.refresh.token}`,
 				})
 				.then(() => {

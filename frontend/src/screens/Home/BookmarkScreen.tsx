@@ -21,7 +21,7 @@ const BookmarkScreen = ({ navigation }) => {
 		try {
 			bookmark.forEach(async function (item, index) {
 				await axios
-					.get(`http://10.0.2.2:3000/v1/products/${item}?field=imageURL,title`, {
+					.get(`http://13.126.33.1:3000/v1/products/${item}?field=imageURL,title`, {
 						headers: {
 							Authorization: "Bearer " + userData.tokens.access.token,
 						},
