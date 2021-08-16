@@ -18,7 +18,6 @@ import { useStore } from "../../context/RootContext";
 
 const RegisterScreen = (props: any) => {
 	const { setState } = useStore();
-
 	const [hidePass, setHidePass] = useState(true);
 	const [isEmailValid, setIsEmailValid] = useState(true);
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -55,7 +54,6 @@ const RegisterScreen = (props: any) => {
 				})
 				.then((res) => storeData(res.data));
 			setState("refresh");
-			// props.navigation.navigate("Core", { screen: "Home" });
 		} catch (err) {
 			Alert.alert("Uh oh...", `${err}`, [
 				{ text: "Okay", onPress: () => console.log("Okay Pressed") },
@@ -113,11 +111,10 @@ const RegisterScreen = (props: any) => {
 
 						<View
 							style={{
-								flexDirection: "row",
 								borderBottomWidth: 1,
 								paddingBottom: 16,
-								justifyContent: "space-between",
-								alignItems: "flex-end",
+								// justifyContent: "space-between",
+								// alignItems: "flex-end",
 							}}
 						>
 							<TextInput
@@ -132,7 +129,10 @@ const RegisterScreen = (props: any) => {
 								secureTextEntry={hidePass ? true : false}
 								onEndEditing={(e) => passwordIsValid(e.nativeEvent.text)}
 							/>
-							<TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+							<TouchableOpacity
+								onPress={() => setHidePass(!hidePass)}
+								style={{ position: "absolute", zIndex: 5, right: 0, bottom: 13 }}
+							>
 								<Ionicons name={hidePass ? "eye-off" : "eye"} size={24} color='#000' />
 							</TouchableOpacity>
 						</View>

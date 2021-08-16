@@ -19,6 +19,7 @@ type PropType = {
 };
 
 const ProductCard = (props: PropType) => {
+	const [isSaved, setIsSaved] = useState(false);
 	const saveBookMark = async (productId) => {
 		const bookmarkStr = await AsyncStorage.getItem("bookmark");
 		const bookmark = JSON.parse(bookmarkStr);
@@ -32,6 +33,7 @@ const ProductCard = (props: PropType) => {
 				bookMarkData.push(productId);
 				await AsyncStorage.setItem("bookmark", JSON.stringify(bookMarkData));
 			}
+			setIsSaved(true);
 		} catch (e) {
 			console.error(e);
 		}
@@ -70,16 +72,28 @@ const ProductCard = (props: PropType) => {
 							<Text style={{ fontFamily: "Lato_400Regular", fontSize: 10 }}>
 								{/* {props.item.subcategory} */} Smart Phones
 							</Text>
-							<TouchableOpacity
-								style={{
-									flexDirection: "row",
-									paddingLeft: 20,
-								}}
-								onPress={() => saveBookMark(props.item.id)}
-							>
-								<AntDesign name='pluscircle' size={15} color='#191970' />
-								<Text style={styles.saveText}>SAVE</Text>
-							</TouchableOpacity>
+							{isSaved ? (
+								<View
+									style={{
+										flexDirection: "row",
+										paddingLeft: 20,
+									}}
+								>
+									<AntDesign name='checkcircle' size={15} color='#191970' />
+									<Text style={styles.saveText}>SAVED</Text>
+								</View>
+							) : (
+								<TouchableOpacity
+									style={{
+										flexDirection: "row",
+										paddingLeft: 20,
+									}}
+									onPress={() => saveBookMark(props.item.id)}
+								>
+									<AntDesign name='pluscircle' size={15} color='#191970' />
+									<Text style={styles.saveText}>SAVE</Text>
+								</TouchableOpacity>
+							)}
 						</View>
 						<View style={styles.ratingAndViewsBox}>
 							<Ionicons name='star' size={14} color='grey' />
@@ -125,7 +139,7 @@ const styles = StyleSheet.create({
 	saveText: {
 		fontSize: 12,
 		fontFamily: "Lato_400Regular",
-		marginLeft: 5,
+		marginHorizontal: 5,
 		color: "#191970",
 	},
 	ratingAndViewsBox: {

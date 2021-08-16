@@ -80,6 +80,7 @@ const LoginScreen = (props: any) => {
 							value={email.trimStart().trimLeft()}
 							onChangeText={setEmail}
 							placeholder='EMAIL'
+							autoFocus={true}
 							autoCapitalize='none'
 							autoCorrect={false}
 							textContentType='emailAddress'
@@ -92,10 +93,8 @@ const LoginScreen = (props: any) => {
 
 						<View
 							style={{
-								flexDirection: "row",
 								borderBottomWidth: 1,
 								paddingBottom: 16,
-								justifyContent: "space-between",
 								marginTop: 24,
 							}}
 						>
@@ -110,7 +109,10 @@ const LoginScreen = (props: any) => {
 								placeholderTextColor='#707070'
 								secureTextEntry={hidePass ? true : false}
 							/>
-							<TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+							<TouchableOpacity
+								onPress={() => setHidePass(!hidePass)}
+								style={{ position: "absolute", zIndex: 5, right: 0 }}
+							>
 								<Ionicons name={hidePass ? "eye-off" : "eye"} size={24} color='#000' />
 							</TouchableOpacity>
 						</View>

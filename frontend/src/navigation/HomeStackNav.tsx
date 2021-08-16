@@ -36,9 +36,9 @@ const HomeStackNav = () => {
 			<HomeStack.Screen
 				name='Bookmark'
 				component={BookmarkScreen}
-				options={{
-					headerShown: false,
-				}}
+				// options={{
+				// 	headerShown: false,
+				// }}
 			/>
 		</HomeStack.Navigator>
 	);

@@ -106,7 +106,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 		try {
 			await axios
 				.patch(
-					`http://10.0.2.2:3000/v1/products/${currentProductId}`,
+					`http://13.235.18.167:3000/v1/products/${currentProductId}`,
 					{
 						views: views + 1,
 					},
@@ -126,7 +126,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 		try {
 			await axios
 				.patch(
-					`http://10.0.2.2:3000/v1/products/${currentProductId}`,
+					`http://13.235.18.167:3000/v1/products/${currentProductId}`,
 					{
 						upvotes: upvotes,
 					},
@@ -147,7 +147,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 	}, []);
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<View style={{ flex: 1 }}>
 			{/* <View style={{ height: insets.top, backgroundColor: "red" }} /> */}
 			<BottomSheet
 				ref={refToBottomSheet}
@@ -266,7 +266,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 						<View>
 							<Text style={styles.subHeadingTextStyle}>Specification </Text>
 							<View style={{ marginHorizontal: 15, marginVertical: 10 }}>
-								<Text>Ram</Text>
+								{/* <Text>Ram</Text> */}
 							</View>
 						</View>
 						<View style={styles.line} />
@@ -283,7 +283,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 				<View style={{ height: 40 }} />
 			</ScrollView>
 			{/* </View> */}
-		</SafeAreaView>
+		</View>
 	);
 };
 

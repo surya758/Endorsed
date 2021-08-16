@@ -1,6 +1,8 @@
 import {
+	Alert,
 	Dimensions,
 	Image,
+	Pressable,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -40,9 +42,16 @@ const ProfileScreen = ({ navigation }) => {
 		}
 	};
 
+	const showSignOutAlert = async () => {
+		return Alert.alert("Sign out?", "You can always log back in", [
+			{ text: "Cancel" },
+			{ text: "Sign out", onPress: () => signOutFunc() },
+		]);
+	};
+
 	return (
 		<>
-			<View style={{ height: insets.top, backgroundColor: "red" }} />
+			<View style={{ height: insets.top }} />
 			<View style={styles.headerBox}>
 				<Text style={styles.headerText}>PROFILE</Text>
 			</View>
@@ -78,27 +87,27 @@ const ProfileScreen = ({ navigation }) => {
 						>
 							{userData.user.name.toUpperCase()}
 						</Text>
-						<TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+						{/* <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
 							<Text style={{ color: "#35c949", fontFamily: "Lato_400Regular", fontSize: 12 }}>
 								Edit Profile
 							</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 				</View>
 			</View>
 			<View style={{ flex: 4 }}>
-				<View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
-					<TouchableOpacity
+				<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+					<Pressable
 						style={{
 							backgroundColor: "#191970",
-							width: 0.8 * windowWidth,
+							width: 0.5 * windowWidth,
 							alignItems: "center",
 							borderRadius: 5,
 						}}
-						onPress={signOutFunc}
+						onPress={showSignOutAlert}
 					>
 						<Text style={{ padding: 15, color: "#fff" }}>Sign Out</Text>
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 			</View>
 		</>

@@ -18,14 +18,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "Endorsed"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {}
+    "web": {
+    }
   }
 }

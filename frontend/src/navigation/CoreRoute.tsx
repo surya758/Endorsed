@@ -36,13 +36,13 @@ const CoreRoute = () => {
 							break;
 					}
 
-					return <Ionicons name={iconName} color='#e60026' size={28} />;
+					return <Ionicons name={iconName} color='#191970' size={28} />;
 				},
 			})}
 		>
 			<Tab.Screen name='Home' component={HomeStackNav} />
-			<Tab.Screen name='Search' component={SearchScreen} />
-			<Tab.Screen name='Notification' component={NotificationScreen} />
+			{/* <Tab.Screen name='Search' component={SearchScreen} />
+			<Tab.Screen name='Notification' component={NotificationScreen} /> */}
 			<Tab.Screen name='Profile' component={ProfileStackNav} />
 		</Tab.Navigator>
 	);

@@ -8,8 +8,9 @@ import RootNav from "../navigation/RootNav";
 const RootState = () => {
 	const [state, setState] = useState<string>("LOL");
 	const [userData, setUserData] = useState<object | "loading" | null>("loading");
-	const [mainScreenProductList, setMainScreenProductList] =
-		useState<object | "loading" | null>("loading");
+	const [mainScreenProductList, setMainScreenProductList] = useState<object | "loading" | null>(
+		"loading"
+	);
 
 	const getUserDataFromLocalStorage = async () => {
 		try {
